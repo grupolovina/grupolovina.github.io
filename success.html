@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obrigado - Grupo Lovina</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .success-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #00c9ff 0%, #1e1cb0 100%);
+            padding: 20px;
+        }
+        
+        .success-container {
+            background: white;
+            border-radius: 2rem;
+            padding: 3rem;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .success-title {
+            font-family: "NeueAlteGrotesk-Bold", sans-serif;
+            font-size: 2rem;
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+        
+        .success-text {
+            font-family: "NeueAlteGrotesk-Regular", sans-serif;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .redirect-info {
+            font-family: "NeueAlteGrotesk-Regular", sans-serif;
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        
+        .continue-btn {
+            background: linear-gradient(to right, #1c7dff, #0051c4);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-family: "NeueAlteGrotesk-Bold", sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .continue-btn:hover {
+            background: linear-gradient(to right, #2289ff, #1c7dff);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="success-page">
+        <div class="success-container">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h1 class="success-title">Obrigado!</h1>
+            <p class="success-text">
+                Suas informações foram enviadas com sucesso! Agora você pode explorar nosso site e descobrir as melhores experiências gastronômicas da Paraíba.
+            </p>
+            <p class="redirect-info">
+                Você será redirecionado automaticamente em <span id="countdown">5</span> segundos...
+            </p>
+            <a href="index.html" class="continue-btn">Continuar para o Site</a>
+        </div>
+    </div>
+
+    <script>
+        // Marcar lead como capturado
+        localStorage.setItem("grupofullano_lead_captured", "true");
+        
+        // Countdown e redirecionamento
+        let countdown = 5;
+        const countdownElement = document.getElementById('countdown');
+        
+        const timer = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(timer);
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

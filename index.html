@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo Lovina</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+    <link rel="icon" type="image/png" href="img/favicongrupofullano.png">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-44CZJFVSVK"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-44CZJFVSVK');
+    </script>
+    
+    <!-- VERIFICAÇÃO DE LEAD CAPTURE - DEVE SER O PRIMEIRO SCRIPT -->
+    <script>
+(function() {
+    // NOVA FUNÇÃO: Verificar se o lead capture expirou (30 dias)
+    function checkLeadCaptureExpiration() {
+        const leadCaptured = localStorage.getItem("grupofullano_lead_captured");
+        const leadCaptureDate = localStorage.getItem("grupofullano_lead_capture_date");
+        
+        if (leadCaptured === "true" && leadCaptureDate) {
+            const captureDate = new Date(leadCaptureDate);
+            const currentDate = new Date();
+            const daysDifference = Math.floor((currentDate - captureDate) / (1000 * 60 * 60 * 24));
+            
+            console.log(`Lead capturado há ${daysDifference} dias`); // Debug
+            
+            // Se passou 30 dias ou mais, resetar o lead capture
+            if (daysDifference >= 30) {
+                console.log("Lead capture expirado - resetando"); // Debug
+                localStorage.removeItem("grupofullano_lead_captured");
+                localStorage.removeItem("grupofullano_lead_capture_date");
+                return false; // Precisa mostrar o formulário novamente
+            }
+            
+            return true; // Ainda dentro dos 30 dias
+        }
+        
+        return false; // Nunca preencheu
+    }
+
+    // Verificar se o usuário já preencheu o formulário de leads
+    const isStillValid = checkLeadCaptureExpiration();
+    
+    // Se não capturou lead ou expirou, redirecionar para a página de captura
+    if (!isStillValid) {
+        window.location.href = "lead-capture.html";
+        return;
+    }
+    
+    console.log("Lead ainda válido, permitindo acesso ao site");
+})();
+</script>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <img src="img/logogrupofullano.png" alt="Grupo Lovina" class="splash-logo">
+            <div class="splash-loader">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="/" class="nav-link-home">
+                    <h1 class="navlogo desktop-logo">GRUPO LOVINA</h1>
+                    <img src="img/logogrupofullano.png" alt="Grupo Lovina" class="mobile-logo">
+                </a>
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#sobre" class="navbotoes" data-translate="aboutUs">Sobre nós</a>
+                <a href="#restaurantes" class="navbotoes" data-translate="restaurants">Restaurantes</a>
+                <a href="#faq" class="navbotoes" data-translate="faq">FAQ</a>
+                <a href="https://wa.me//5583994086927" class="navbotoes" data-translate="location">Trabalhe conosco</a>
+            </nav>
+            <div class="nav-actions">
+                <div class="language-selector">
+                    <button class="language-toggle" id="languageToggle">
+                        <img src="https://flagcdn.com/w20/br.png" alt="Português" class="flag-icon" id="currentFlag">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option" data-lang="pt">
+                            <img src="https://flagcdn.com/w20/br.png" alt="Português" class="flag-icon">
+                            <span>Português</span>
+                        </div>
+                        <div class="language-option" data-lang="en">
+                            <img src="https://flagcdn.com/w20/us.png" alt="English" class="flag-icon">
+                            <span>English</span>
+                        </div>
+                        <div class="language-option" data-lang="es">
+                            <img src="https://flagcdn.com/w20/es.png" alt="Español" class="flag-icon">
+                            <span>Español</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                </button>
+                <a href="reserva.html">
+                    <button class="btn-primary" data-translate="reserveButton">Reservar já</button>
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="herotextoh1" data-translate="heroTitle">Descubra o <span class="highlight">Sabor</span>, Viva a Experiência!</h1>
+                    <p class="herotextoh2" data-translate="heroSubtitle">Conheça os melhores restaurantes e experiências <span class="highlight">gastronômicas mais incríveis da Paraíba.</span> Uma jornada culinária inesquecível te espera!</p>
+                    <button class="btn-secondary" data-translate="heroButton">Conheça o Grupo Lovina <i class="ph ph-arrow-circle-right"></i></button>
+                    <div class="rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="herotextoh3" data-translate="heroRating">Avaliado por mais de <span class="highlight">+25.284 clientes</span></span>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <video autoplay muted loop playsinline class="hero-video">
+                        <source src="video/hero-video.mp4" type="video/mp4">
+                        Seu navegador não suporta vídeos HTML5.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Tags -->
+    <section class="location-tags">
+        <div class="container">
+            <div class="tags-container">
+                <div class="tags-scroll">
+                    <span class="tag">GRUPO LOVINA</span>
+                    <span class="tag">GOLFINHO BAR</span>
+                    <span class="tag">FULLANO PRAIA</span>
+                    <span class="tag">LOVINA SEIXAS</span>
+                    <span class="tag">LOVINA PONTA DE CAMPINA</span>
+                    <span class="tag">RANCHO DA EMA</span>
+                    <span class="tag">LOVINA TURISMO</span>
+                    <span class="tag">GOLFINHO BAR</span>
+                    <span class="tag">FULLANO PRAIA</span> 
+                    <span class="tag">LOVINA SEIXAS</span>
+                    <span class="tag">LOVINA PONTA DE CAMPINA</span>
+                    <span class="tag">RANCHO DA EMA</span>
+                    <span class="tag">GRUPO LOVINA</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Section -->
+    <section class="locations" id="restaurantes">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="sectionh1" data-translate="experienceTitle">VIVENCIE O MELHOR DA PARAÍBA</h2>
+                <p class="sectionh2" data-translate="experienceSubtitle">Descubra suas melhores experiências</p>
+            </div>
+            <div class="locations-grid" id="locationsGrid">
+                <!-- Locations will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="sobre">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="aboutsectionh1" data-translate="aboutTitle">SOBRE NÓS</h2>
+                    <p class="about-subtitle" data-translate="aboutSubtitle">Conheça um pouco sobre nós!</p>
+                    
+                    <div class="features">
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h3 class="aboutsectionh3" data-translate="authenticFlavor">Sabor Autêntico</h3>
+                                <p class="aboutsectionp" data-translate="authenticFlavorDesc">Pratos tradicionais preparados com ingredientes frescos e receitas familiares.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h3 class="aboutsectionh3" data-translate="respectNature">Respeito ao Mar e à Terra</h3>
+                                <p class="aboutsectionp" data-translate="respectNatureDesc">Sustentabilidade e respeito ao meio ambiente em todas as nossas operações.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h3 class="aboutsectionh3" data-translate="hospitality">Hospitalidade Paraibana</h3>
+                                <p class="aboutsectionp" data-translate="hospitalityDesc">Atendimento caloroso e acolhedor que faz você se sentir em casa.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h3 class="aboutsectionh3" data-translate="memorableExperiences">Experiências Memoráveis</h3>
+                                <p class="aboutsectionp" data-translate="memorableExperiencesDesc">Momentos únicos que ficam na memória e no coração de nossos visitantes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="img/centralfrente.png" alt="Sobre nós">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="testih2" data-translate="testimonialsTitle">NOSSAS AVALIAÇÕES</h2>
+                <p class="testip" data-translate="testimonialsSubtitle">Reconhecido por +25.284 no Google</p>
+            </div>
+            <div class="testimonials-carousel-container">
+                <button class="carousel-btn carousel-btn-left" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="testimonials-grid" id="testimonialsGrid">
+                    <!-- Testimonials will be populated by JavaScript -->
+                </div>
+                <button class="carousel-btn carousel-btn-right" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="carousel-indicators" id="carouselIndicators">
+                <!-- Indicators will be populated by JavaScript -->
+            </div>
+            <div class="google-approval">
+                <p class="testip2" data-translate="googleApproval"> <i class="ph ph-shield-check"></i>Aprovado por milhares de avaliações no Google<i class="ph ph-smiley"></i></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="galleryh2" data-translate="galleryTitle">AMBIENTE</h2>
+                <p class="galleryp" data-translate="gallerySubtitle">Conheça os nossos ambientes!</p>
+            </div>
+            <div class="gallery-carousel-container">
+                <button class="carousel-btn carousel-btn-left" id="prevGalleryBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="gallery-grid" id="galleryGrid">
+                    <!-- Gallery will be populated by JavaScript -->
+                </div>
+                <button class="carousel-btn carousel-btn-right" id="nextGalleryBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="carousel-indicators" id="galleryIndicators">
+                <!-- Indicators will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="faqh2" data-translate="faqTitle">PERGUNTAS FREQUENTES</h2>
+                <p class="faqp" data-translate="faqSubtitle">Tire suas dúvidas sobre nossos restaurantes.</p>
+            </div>
+            <div class="faq-container" id="faqContainer">
+                <!-- FAQ items will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="localizacao">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3 class="footerh3" data-translate="footerTitle">GRUPO LOVINA</h3>
+                    <p class="footerp" data-translate="footerDescription">Nosso Grupo Lovina tem a missão de oferecer a todos os clientes a melhor experiência gastronômica da Paraíba. Nossos restaurantes são locais de encontro, de celebração e de descoberta de novos sabores. Venha viver experiências inesquecíveis e provar pratos únicos de nossa culinária!</p>
+                    <div class="social-links">
+                        <a href="https://github.com/grupolovina"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://www.instagram.com/grupolovina/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/grupolovina/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.youtube.com/@GrupoLovina"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3 class="footerh3" data-translate="addressTitle">ENDEREÇO</h3>
+                    <div class="address">
+                        <p class="footerp">Avenida Governador</p>
+                        <p class="footerp">Argemiro de Figueiredo,</p>
+                        <p class="footerp">Jardim Oceania, João</p>
+                        <p class="footerp">Pessoa - PB,</p>
+                        <p class="footerp">CEP: 58037-030</p>
+                    </div>
+                    
+                    <h3 class="footerh3" data-translate="contactTitle">CONTATO</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <a href="https://wa.me//5583994086376" class="contactspan">(83) 99408-6376</a>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                             <a href="mailto:lovinagrupo@gmail.com" class="contactspan">lovinagrupo@gmail.com</a>
+                        </div>
+                    </div>
+                    <a href="reserva.html">
+                        <button class="btn-secondary2" data-translate="reserveHere">RESERVE AQUI</button>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Copyright © 2025 - Grupo Lovina - Política de privacidade aplicada</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-buttons">
+        <button class="ai-chat-btn" id="aiChatBtn">
+            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="IA Assistant" class="ai-icon">
+        </button>
+        <button class="scroll-btn" id="scrollBtn">
+            <i class="fas fa-arrow-up" id="scrollIcon"></i>
+        </button>
+    </div>
+
+    <!-- AI Chat Modal -->
+    <div class="ai-chat-modal" id="aiChatModal">
+        <div class="ai-chat-content">
+            <div class="ai-chat-header">
+                <div class="ai-avatar">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="IA Assistant">
+                </div>
+                <div class="ai-info">
+                    <h3 data-translate="aiTitle">Assistente Virtual</h3>
+                    <p data-translate="aiSubtitle">Como posso ajudar você?</p>
+                </div>
+                <button class="ai-close" id="aiCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="ai-chat-body" id="aiChatBody">
+                <div class="ai-message">
+                    <div class="ai-avatar-small">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="IA">
+                    </div>
+                    <div class="ai-text" data-translate="aiWelcome">
+                        Olá! Sou o assistente virtual do Grupo Lovina. Escolha uma das opções abaixo ou digite sua pergunta:
+                    </div>
+                </div>
+                <div class="ai-quick-questions" id="aiQuickQuestions">
+                    <!-- Quick questions will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="ai-chat-input">
+                <input type="text" id="aiInput" placeholder="Digite sua pergunta..." data-translate-placeholder="aiInputPlaceholder">
+                <button id="aiSendBtn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Translation Suggestion Modal -->
+    <div class="translation-modal" id="translationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-translate="translationTitle">Traduzir página?</h3>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p data-translate="translationMessage">Detectamos que você pode preferir ver este site em outro idioma. Gostaria de traduzir?</p>
+                <div class="suggested-languages" id="suggestedLanguages">
+                    <!-- Languages will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-outline" id="dismissTranslation" data-translate="noThanks">Não, obrigado</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

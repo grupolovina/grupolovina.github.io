@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas - Grupo Lovina</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- VERIFICAÇÃO DE LEAD CAPTURE PARA RESERVAS -->
+    <script>
+    (function() {
+    // NOVA FUNÇÃO: Verificar se o lead capture expirou (30 dias)
+    function checkLeadCaptureExpiration() {
+        const leadCaptured = localStorage.getItem("grupofullano_lead_captured");
+        const leadCaptureDate = localStorage.getItem("grupofullano_lead_capture_date");
+        
+        if (leadCaptured === "true" && leadCaptureDate) {
+            const captureDate = new Date(leadCaptureDate);
+            const currentDate = new Date();
+            const daysDifference = Math.floor((currentDate - captureDate) / (1000 * 60 * 60 * 24));
+            
+            // Se passou 30 dias ou mais, resetar o lead capture
+            if (daysDifference >= 30) {
+                localStorage.removeItem("grupofullano_lead_captured");
+                localStorage.removeItem("grupofullano_lead_capture_date");
+                return false; // Precisa mostrar o formulário novamente
+            }
+            
+            return true; // Ainda dentro dos 30 dias
+        }
+        
+        return false; // Nunca preencheu
+    }
+
+    const isStillValid = checkLeadCaptureExpiration();
+    if (!isStillValid) {
+        window.location.href = "lead-capture.html";
+        return;
+    }
+})();
+</script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html" class="nav-link-home">
+                    <h1 class="navlogo desktop-logo">GRUPO LOVINA</h1>
+                    <img src="img/logogrupofullano.png" alt="Grupo Lovina" class="mobile-logo">
+                </a>
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html#sobre" class="navbotoes" data-translate="aboutUs">Sobre nós</a>
+                <a href="index.html#restaurantes" class="navbotoes" data-translate="restaurants">Restaurantes</a>
+                <a href="index.html#faq" class="navbotoes" data-translate="faq">FAQ</a>
+                <a href="index.html#localizacao" class="navbotoes" data-translate="location">Localização</a>
+            </nav>
+            <div class="nav-actions">
+                <div class="language-selector">
+                    <button class="language-toggle" id="languageToggle">
+                        <img src="https://flagcdn.com/w20/br.png" alt="Português" class="flag-icon" id="currentFlag">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option" data-lang="pt">
+                            <img src="https://flagcdn.com/w20/br.png" alt="Português" class="flag-icon">
+                            <span>Português</span>
+                        </div>
+                        <div class="language-option" data-lang="en">
+                            <img src="https://flagcdn.com/w20/us.png" alt="English" class="flag-icon">
+                            <span>English</span>
+                        </div>
+                        <div class="language-option" data-lang="es">
+                            <img src="https://flagcdn.com/w20/es.png" alt="Español" class="flag-icon">
+                            <span>Español</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                </button>
+                <a href="index.html">
+                    <button class="btn-primary" data-translate="backToSite">Voltar ao Site</button>
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Reservation Section -->
+    <section class="reservation-section">
+        <div class="container">
+            <div class="reservation-content">
+                <div class="reservation-header">
+                    <h1 data-translate="reservationTitle">Faça sua Reserva</h1>
+                    <p data-translate="reservationSubtitle">Reserve seu lounge ou área com piscina em nossos restaurantes. ATENÇÃO: Para reservas no mesmo dia, só é possível reservar até as 11h da manhã.</p>
+                </div>
+
+                <!-- Validation Message -->
+                <div class="form-validation-message" id="validationMessage" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span data-translate="validationMessage">Por favor, preencha todos os campos obrigatórios. Para reservas no mesmo dia, só é possível reservar até as 11h da manhã.</span>
+                </div>
+
+                <form class="reservation-form" id="reservationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name" data-translate="fullNameLabel">Nome Completo *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" data-translate="phoneLabel">Telefone *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email" data-translate="emailLabel">E-mail *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guests" data-translate="guestsLabel">Número de Pessoas *</label>
+                            <select id="guests" name="guests" required>
+                                <option value="" data-translate="selectOption">Selecione</option>
+                                <option value="1" data-translate="onePerson">1 pessoa</option>
+                                <option value="2" data-translate="twoPeople">2 pessoas</option>
+                                <option value="3" data-translate="threePeople">3 pessoas</option>
+                                <option value="4" data-translate="fourPeople">4 pessoas</option>
+                                <option value="5" data-translate="fivePeople">5 pessoas</option>
+                                <option value="6" data-translate="sixPeople">6 pessoas</option>
+                                <option value="7" data-translate="sevenPeople">7 pessoas</option>
+                                <option value="8" data-translate="eightPeople">8 pessoas</option>
+                                <option value="9" data-translate="ninePeople">9 pessoas</option>
+                                <option value="10" data-translate="tenPeople">10 pessoas</option>
+                                <option value="10+" data-translate="moreThanTen">Mais de 10 pessoas</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="restaurant" data-translate="restaurantLabel">Restaurante *</label>
+                            <select id="restaurant" name="restaurant" required>
+                                <option value="" data-translate="selectRestaurant">Selecione o restaurante</option>
+                                <option value="Golfinho Bar">Golfinho Bar</option>
+                                <option value="Lovina Seixas">Lovina Seixas</option>
+                                <option value="Lovina Ponta de Campina">Lovina Ponta de Campina</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reservationType" data-translate="reservationTypeLabel">Tipo de Reserva *</label>
+                            <select id="reservationType" name="reservationType" required disabled>
+                                <option value="" data-translate="selectRestaurantFirst">Primeiro selecione o restaurante</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date" data-translate="dateLabel">Data *</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="time" data-translate="timeLabel">Horário *</label>
+                            <select id="time" name="time" required>
+                                <option value="" data-translate="selectTime">Selecione o horário</option>
+                                <option value="11:00">08:00</option>
+                                <option value="11:30">09:00</option>
+                                <option value="12:00">10:00</option>
+                                <option value="12:30">11:00</option>
+                                <option value="13:00">12:00</option>
+                                <option value="13:30">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">15:00</option>
+                                <option value="15:00">16:00</option>
+                                <option value="15:30">17:00</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="occasion" data-translate="occasionLabel">Ocasião</label>
+                            <select id="occasion" name="occasion">
+                                <option value="" data-translate="selectOptional">Selecione (opcional)</option>
+                                <option value="Aniversário" data-translate="birthday">Aniversário</option>
+                                <option value="Encontro Romântico" data-translate="romanticDate">Encontro Romântico</option>
+                                <option value="Reunião de Família" data-translate="familyReunion">Reunião de Família</option>
+                                <option value="Encontro de Amigos" data-translate="friendsMeeting">Encontro de Amigos</option>
+                                <option value="Comemoração" data-translate="celebration">Comemoração</option>
+                                <option value="Reunião de Trabalho" data-translate="businessMeeting">Reunião de Trabalho</option>
+                                <option value="Outro" data-translate="other">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="observations" data-translate="observationsLabel">Observações Especiais</label>
+                            <textarea id="observations" name="observations" rows="3" data-translate-placeholder="observationsPlaceholder" placeholder="Alguma observação especial? (opcional)"></textarea>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="reservation-actions">
+                    <div class="copy-instruction">
+                        <i class="fas fa-info-circle"></i>
+                        <span data-translate="copyInstruction">Primeiro copie os dados da reserva</span>
+                    </div>
+                    <button class="btn-copy" id="copyDataBtn" disabled>
+                        <i class="fas fa-copy"></i> <span data-translate="copyDataButton">Copiar Dados da Reserva</span>
+                    </button>
+                    
+                    <div class="whatsapp-instruction" style="display: none;">
+                        <i class="fas fa-arrow-down"></i>
+                        <span data-translate="whatsappInstruction">Agora envie pelo WhatsApp</span>
+                    </div>
+                    <button class="btn-whatsapp" id="whatsappBtn" disabled>
+                        <i class="fab fa-whatsapp"></i> <span data-translate="whatsappButton">Enviar pelo WhatsApp</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="reserva.js"></script>
+</body>
+</html>
