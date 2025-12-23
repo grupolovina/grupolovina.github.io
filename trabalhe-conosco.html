@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabalhe Conosco - Grupo Lovina</title>
+    <link rel="stylesheet" href="trabalhe-conosco-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/favicongrupofullano.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html" class="nav-link-home">
+                    <h1 class="navlogo desktop-logo">GRUPO LOVINA</h1>
+                    <img src="img/logogrupofullano.png" alt="Grupo Lovina" class="mobile-logo">
+                </a>
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <!-- <a href="index.html" class="navbotoes" data-translate="home">Grupo Lovina</a> -->
+                <a href="index.html#sobre" class="navbotoes" data-translate="aboutUs">Sobre nós</a>
+                <a href="index.html#faq" class="navbotoes" data-translate="faq">FAQ</a>
+            </nav>
+            <div class="nav-actions">
+                <div class="language-selector">
+                    <button class="language-toggle" id="languageToggle">
+                        <img src="https://flagcdn.com/w20/br.png" alt="Português" class="flag-icon" id="currentFlag">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option" data-lang="pt">
+                            <img src="https://flagcdn.com/w20/br.png" alt="Português" class="flag-icon">
+                            <span>Português</span>
+                        </div>
+                        <div class="language-option" data-lang="en">
+                            <img src="https://flagcdn.com/w20/us.png" alt="English" class="flag-icon">
+                            <span>English</span>
+                        </div>
+                        <div class="language-option" data-lang="es">
+                            <img src="https://flagcdn.com/w20/es.png" alt="Español" class="flag-icon">
+                            <span>Español</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                </button>
+                <a href="reserva.html">
+                    <button class="btn-primary" data-translate="reserveButton">Reservar já</button>
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="careers-main">
+        <div class="careers-container">
+            <div class="careers-content">
+                <!-- Image Section -->
+                <div class="careers-image">
+                    <img src="./public/mulherrh.png" alt="RH Grupo Lovina">
+                </div>
+
+                <!-- Text and Buttons Section -->
+                <div class="careers-text-section">
+                    <h1 class="careers-title" data-translate="careersTitle">Já pensou em trabalhar conosco?</h1>
+                    <p class="careers-description" data-translate="careersDescription">
+                        Envie seu currículo em algum dos números abaixo:
+                    </p>
+
+                    <div class="careers-buttons">
+                        <a href="https://wa.me/5583993674130" target="_blank" rel="noopener noreferrer" class="btn-rh">
+                            <i class="fab fa-whatsapp"></i>
+                            <span data-translate="rh1Button">RH 1</span>
+                        </a>
+                        <a href="https://wa.me/5583994086927" target="_blank" rel="noopener noreferrer" class="btn-rh btn-rh-secondary">
+                            <i class="fab fa-whatsapp"></i>
+                            <span data-translate="rh2Button">RH 2</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="trabalhe-conosco-script.js"></script>
+</body>
+</html>
