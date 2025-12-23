@@ -54,6 +54,8 @@ const translations = {
     careersDescription: "Envie seu currículo em algum dos números abaixo:",
     rh1Button: "RH 1",
     rh2Button: "RH 2",
+    noResumeText: "Você não tem currículo? Crie o seu agora gratuitamente pelo nosso gerador de currículo!",
+    createResumeButton: "Criar Meu Currículo",
   },
   en: {
     home: "Grupo Lovina",
@@ -64,6 +66,8 @@ const translations = {
     careersDescription: "Send your resume to one of the numbers below:",
     rh1Button: "HR 1",
     rh2Button: "HR 2",
+    noResumeText: "Don't have a resume? Create yours now for free with our resume generator!",
+    createResumeButton: "Create My Resume",
   },
   es: {
     home: "Grupo Lovina",
@@ -74,6 +78,8 @@ const translations = {
     careersDescription: "Envía tu currículum a uno de los números a continuación:",
     rh1Button: "RH 1",
     rh2Button: "RH 2",
+    noResumeText: "¿No tienes currículum? ¡Crea el tuyo ahora gratis con nuestro generador de currículum!",
+    createResumeButton: "Crear Mi Currículum",
   },
 }
 

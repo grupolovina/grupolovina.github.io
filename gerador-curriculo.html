@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Currículo - Grupo Lovina</title>
+    <link rel="stylesheet" href="gerador-curriculo-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/favicongrupofullano.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html" class="nav-link-home">
+                    <h1 class="navlogo desktop-logo">GRUPO LOVINA</h1>
+                    <img src="img/logogrupofullano.png" alt="Grupo Lovina" class="mobile-logo">
+                </a>
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="navbotoes" data-translate="home">Grupo Lovina</a>
+                <a href="index.html#sobre" class="navbotoes" data-translate="aboutUs">Sobre nós</a>
+                <a href="index.html#faq" class="navbotoes" data-translate="faq">FAQ</a>
+                <a href="trabalhe-conosco.html" class="navbotoes" data-translate="workWithUs">Trabalhe Conosco</a>
+            </nav>
+            <div class="nav-actions">
+                <div class="language-selector">
+                    <button class="language-toggle" id="languageToggle">
+                        <img src="https://flagcdn.com/w20/br.png" alt="Português" class="flag-icon" id="currentFlag">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option" data-lang="pt">
+                            <img src="https://flagcdn.com/w20/br.png" alt="Português" class="flag-icon">
+                            <span>Português</span>
+                        </div>
+                        <div class="language-option" data-lang="en">
+                            <img src="https://flagcdn.com/w20/us.png" alt="English" class="flag-icon">
+                            <span>English</span>
+                        </div>
+                        <div class="language-option" data-lang="es">
+                            <img src="https://flagcdn.com/w20/es.png" alt="Español" class="flag-icon">
+                            <span>Español</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                </button>
+                <a href="reserva.html">
+                    <button class="btn-primary" data-translate="reserveButton">Reservar já</button>
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="generator-main">
+        <div class="generator-container">
+            <h1 class="generator-title" data-translate="generatorTitle">Crie seu Currículo Gratuitamente</h1>
+            <p class="generator-subtitle" data-translate="generatorSubtitle">Preencha os campos abaixo e gere seu currículo em PDF</p>
+
+            <form id="resumeForm" class="resume-form">
+                <!-- Dados Pessoais -->
+                <div class="form-section">
+                    <h2 class="section-title" data-translate="personalDataTitle">
+                        <i class="fas fa-user"></i> Dados Pessoais
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="fullName" data-translate="fullNameLabel">Nome Completo</label>
+                            <input type="text" id="fullName" required placeholder="João da Silva">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" data-translate="emailLabel">E-mail</label>
+                            <input type="email" id="email" required placeholder="joao@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" data-translate="phoneLabel">Telefone</label>
+                            <input type="tel" id="phone" required placeholder="(83) 99999-9999">
+                        </div>
+                        <div class="form-group">
+                            <label for="address" data-translate="addressLabel">Endereço</label>
+                            <input type="text" id="address" placeholder="Cidade, Estado">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Objetivo -->
+                <div class="form-section">
+                    <h2 class="section-title" data-translate="objectiveTitle">
+                        <i class="fas fa-bullseye"></i> Objetivo Profissional
+                    </h2>
+                    <div class="form-group">
+                        <label for="objective" data-translate="objectiveLabel">Descreva seu objetivo</label>
+                        <textarea id="objective" rows="3" placeholder="Ex: Busco uma oportunidade na área de..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Experiência -->
+                <div class="form-section">
+                    <h2 class="section-title" data-translate="experienceTitle">
+                        <i class="fas fa-briefcase"></i> Experiência Profissional
+                    </h2>
+                    <div id="experienceContainer">
+                        <div class="experience-item">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label data-translate="companyLabel">Empresa</label>
+                                    <input type="text" class="experience-company" placeholder="Nome da empresa">
+                                </div>
+                                <div class="form-group">
+                                    <label data-translate="positionLabel">Cargo</label>
+                                    <input type="text" class="experience-position" placeholder="Seu cargo">
+                                </div>
+                                <div class="form-group">
+                                    <label data-translate="periodLabel">Período</label>
+                                    <input type="text" class="experience-period" placeholder="Jan 2020 - Dez 2022">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label data-translate="activitiesLabel">Atividades</label>
+                                <textarea class="experience-activities" rows="2" placeholder="Descreva suas atividades..."></textarea>
+                            </div>
+                            <button type="button" class="btn-remove" onclick="removeExperience(this)">
+                                <i class="fas fa-times"></i>
+                                <span data-translate="removeButton">Remover</span>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add" id="addExperience">
+                        <i class="fas fa-plus"></i>
+                        <span data-translate="addExperienceButton">Adicionar Experiência</span>
+                    </button>
+                </div>
+
+                <!-- Educação -->
+                <div class="form-section">
+                    <h2 class="section-title" data-translate="educationTitle">
+                        <i class="fas fa-graduation-cap"></i> Formação Acadêmica
+                    </h2>
+                    <div id="educationContainer">
+                        <div class="education-item">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label data-translate="institutionLabel">Instituição</label>
+                                    <input type="text" class="education-institution" placeholder="Nome da instituição">
+                                </div>
+                                <div class="form-group">
+                                    <label data-translate="courseLabel">Curso</label>
+                                    <input type="text" class="education-course" placeholder="Nome do curso">
+                                </div>
+                                <div class="form-group">
+                                    <label data-translate="periodLabel">Período</label>
+                                    <input type="text" class="education-period" placeholder="2018 - 2022">
+                                </div>
+                            </div>
+                            <button type="button" class="btn-remove" onclick="removeEducation(this)">
+                                <i class="fas fa-times"></i>
+                                <span data-translate="removeButton">Remover</span>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add" id="addEducation">
+                        <i class="fas fa-plus"></i>
+                        <span data-translate="addEducationButton">Adicionar Formação</span>
+                    </button>
+                </div>
+
+                <!-- Habilidades -->
+                <div class="form-section">
+                    <h2 class="section-title" data-translate="skillsTitle">
+                        <i class="fas fa-star"></i> Habilidades
+                    </h2>
+                    <div class="form-group">
+                        <label for="skills" data-translate="skillsLabel">Liste suas habilidades (separadas por vírgula)</label>
+                        <textarea id="skills" rows="3" placeholder="Ex: Microsoft Office, Trabalho em equipe, Comunicação..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Idiomas -->
+                <div class="form-section">
+                    <h2 class="section-title" data-translate="languagesTitle">
+                        <i class="fas fa-language"></i> Idiomas
+                    </h2>
+                    <div id="languagesContainer">
+                        <div class="language-item">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label data-translate="languageNameLabel">Idioma</label>
+                                    <input type="text" class="language-name" placeholder="Ex: Português, Inglês, Espanhol">
+                                </div>
+                                <div class="form-group">
+                                    <label data-translate="languageLevelLabel">Nível</label>
+                                    <select class="language-level">
+                                        <option value="" data-translate="selectLevel">Selecione</option>
+                                        <option value="Básico" data-translate="basicLevel">Básico</option>
+                                        <option value="Intermediário" data-translate="intermediateLevel">Intermediário</option>
+                                        <option value="Avançado" data-translate="advancedLevel">Avançado</option>
+                                        <option value="Fluente" data-translate="fluentLevel">Fluente</option>
+                                        <option value="Nativo" data-translate="nativeLevel">Nativo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-remove" onclick="removeLanguage(this)">
+                                <i class="fas fa-times"></i>
+                                <span data-translate="removeButton">Remover</span>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add" id="addLanguage">
+                        <i class="fas fa-plus"></i>
+                        <span data-translate="addLanguageButton">Adicionar Idioma</span>
+                    </button>
+                </div>
+
+                <!-- Foto (Opcional) -->
+                <div class="form-section">
+                    <h2 class="section-title" data-translate="photoTitle">
+                        <i class="fas fa-camera"></i> Foto (Opcional)
+                    </h2>
+                    <div class="photo-upload-container">
+                        <input type="file" id="photoUpload" accept="image/*" style="display: none;">
+                        <label for="photoUpload" class="photo-upload-label">
+                            <div class="photo-preview" id="photoPreview">
+                                <i class="fas fa-user-circle photo-placeholder-icon"></i>
+                                <p data-translate="uploadPhotoText">Clique para adicionar foto</p>
+                                <p class="photo-size-hint" data-translate="photoSizeHint">Máximo: 10MB</p>
+                            </div>
+                        </label>
+                        <button type="button" class="btn-remove-photo" id="removePhoto" style="display: none;">
+                            <i class="fas fa-trash"></i>
+                            <span data-translate="removePhotoButton">Remover Foto</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Botão Gerar -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-generate">
+                        <i class="fas fa-file-pdf"></i>
+                        <span data-translate="generateButton">Gerar Currículo em PDF</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="gerador-curriculo-script.js"></script>
+</body>
+</html>
