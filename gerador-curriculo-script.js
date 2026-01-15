@@ -385,14 +385,12 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
 
   try {
     // Get form data
-    const formData = {
-      fullName: document.getElementById("fullName").value,
-      email: document.getElementById("email").value,
-      phone: document.getElementById("phone").value,
-      address: document.getElementById("address").value,
-      objective: document.getElementById("objective").value,
-      skills: document.getElementById("skills").value,
-    }
+    const fullName = document.getElementById("fullName").value
+    const email = document.getElementById("email").value
+    const phone = document.getElementById("phone").value
+    const address = document.getElementById("address").value
+    const objective = document.getElementById("objective").value
+    const skills = document.getElementById("skills").value
 
     // Get experiences
     const experiences = []
@@ -430,131 +428,236 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
       }
     })
 
-    const photoFile = document.getElementById("photoUpload").files[0] || null
+    const { jsPDF } = window.jspdf
+    const doc = new jsPDF()
+
+    const primaryColor = [33, 101, 155] // #21659B
+    const secondaryColor = [83, 215, 183] // #53D7B7
+    const textColor = [50, 50, 50]
+    const lightGray = [128, 128, 128]
+
+    let yPosition = 20
+
+    // Add photo if exists
+    if (photoData) {
+      try {
+        doc.addImage(photoData, "JPEG", 160, yPosition, 35, 35)
+      } catch (error) {
+        console.error("[v0] Erro ao adicionar foto ao PDF:", error)
+      }
+    }
+
+    // Header with name
+    doc.setFontSize(24)
+    doc.setTextColor(...primaryColor)
+    doc.text(fullName || "Nome Completo", 20, yPosition)
+    yPosition += 10
+
+    // Contact info
+    doc.setFontSize(11)
+    doc.setTextColor(...textColor)
+    if (email) doc.text(`Email: ${email}`, 20, yPosition)
+    yPosition += 6
+    if (phone) doc.text(`Telefone: ${phone}`, 20, yPosition)
+    yPosition += 6
+    if (address) doc.text(`Endereço: ${address}`, 20, yPosition)
+    yPosition += 12
+
+    // Objective
+    if (objective) {
+      doc.setFontSize(14)
+      doc.setTextColor(...primaryColor)
+      doc.text("Objetivo Profissional", 20, yPosition)
+      yPosition += 8
+      doc.setFontSize(11)
+      doc.setTextColor(...textColor)
+      const objectiveLines = doc.splitTextToSize(objective, 170)
+      doc.text(objectiveLines, 20, yPosition)
+      yPosition += objectiveLines.length * 6 + 6
+    }
+
+    // Experience
+    if (experiences.length > 0) {
+      doc.setFontSize(14)
+      doc.setTextColor(...primaryColor)
+      doc.text("Experiência Profissional", 20, yPosition)
+      yPosition += 8
+
+      experiences.forEach((exp) => {
+        if (yPosition > 250) {
+          doc.addPage()
+          yPosition = 20
+        }
+
+        doc.setFontSize(12)
+        doc.setTextColor(...textColor)
+        doc.text(exp.position || "Cargo não informado", 20, yPosition)
+        yPosition += 6
+
+        doc.setFontSize(10)
+        doc.setTextColor(...lightGray)
+        doc.text(`${exp.company || "Empresa"} | ${exp.period || "Período"}`, 20, yPosition)
+        yPosition += 6
+
+        if (exp.activities) {
+          doc.setFontSize(10)
+          doc.setTextColor(...textColor)
+          const activityLines = doc.splitTextToSize(exp.activities, 170)
+          doc.text(activityLines, 20, yPosition)
+          yPosition += activityLines.length * 5 + 4
+        }
+        yPosition += 4
+      })
+      yPosition += 4
+    }
+
+    // Education
+    if (education.length > 0) {
+      if (yPosition > 250) {
+        doc.addPage()
+        yPosition = 20
+      }
+
+      doc.setFontSize(14)
+      doc.setTextColor(...primaryColor)
+      doc.text("Formação Acadêmica", 20, yPosition)
+      yPosition += 8
+
+      education.forEach((edu) => {
+        if (yPosition > 270) {
+          doc.addPage()
+          yPosition = 20
+        }
+
+        doc.setFontSize(12)
+        doc.setTextColor(...textColor)
+        doc.text(edu.course || "Curso não informado", 20, yPosition)
+        yPosition += 6
+
+        doc.setFontSize(10)
+        doc.setTextColor(...lightGray)
+        doc.text(`${edu.institution || "Instituição"} | ${edu.period || "Período"}`, 20, yPosition)
+        yPosition += 8
+      })
+      yPosition += 4
+    }
+
+    // Languages
+    if (languages.length > 0) {
+      if (yPosition > 250) {
+        doc.addPage()
+        yPosition = 20
+      }
+
+      doc.setFontSize(14)
+      doc.setTextColor(...primaryColor)
+      doc.text("Idiomas", 20, yPosition)
+      yPosition += 8
+
+      languages.forEach((lang) => {
+        if (yPosition > 270) {
+          doc.addPage()
+          yPosition = 20
+        }
+
+        doc.setFontSize(11)
+        doc.setTextColor(...textColor)
+        doc.text(`• ${lang.name}: ${lang.level}`, 20, yPosition)
+        yPosition += 6
+      })
+      yPosition += 4
+    }
+
+    // Skills
+    if (skills) {
+      if (yPosition > 250) {
+        doc.addPage()
+        yPosition = 20
+      }
+
+      doc.setFontSize(14)
+      doc.setTextColor(...primaryColor)
+      doc.text("Habilidades", 20, yPosition)
+      yPosition += 8
+
+      doc.setFontSize(11)
+      doc.setTextColor(...textColor)
+      const skillsLines = doc.splitTextToSize(skills, 170)
+      doc.text(skillsLines, 20, yPosition)
+    }
+
+    const pdfBlob = doc.output("blob")
+
+    // Format data for email
+    const experiencesText = experiences
+      .map(
+        (exp, i) =>
+          `${i + 1}. ${exp.position || "Cargo não informado"}\n   Empresa: ${exp.company || "Não informado"}\n   Período: ${exp.period || "Não informado"}\n   Atividades: ${exp.activities || "Não informado"}`,
+      )
+      .join("\n\n")
+
+    const educationText = education
+      .map(
+        (edu, i) =>
+          `${i + 1}. ${edu.course || "Curso não informado"}\n   Instituição: ${edu.institution || "Não informado"}\n   Período: ${edu.period || "Não informado"}`,
+      )
+      .join("\n\n")
+
+    const languagesText = languages.map((lang) => `• ${lang.name}: ${lang.level}`).join("\n")
+
+    // Populate hidden fields
+    document.getElementById("hidden_fullName").value = fullName
+    document.getElementById("hidden_email").value = email
+    document.getElementById("hidden_phone").value = phone
+    document.getElementById("hidden_address").value = address || "Não informado"
+    document.getElementById("hidden_objective").value = objective || "Não informado"
+    document.getElementById("hidden_experiences").value = experiencesText || "Não informado"
+    document.getElementById("hidden_education").value = educationText || "Não informado"
+    document.getElementById("hidden_languages").value = languagesText || "Não informado"
+    document.getElementById("hidden_skills").value = skills || "Não informado"
+    document.getElementById("hidden_replyto").value = email
+
+    const form = document.getElementById("resumeForm")
+    const formData = new FormData(form)
+
+    // Add PDF as attachment
+    formData.append("attachment", pdfBlob, `Curriculo_${fullName.replace(/\s+/g, "_")}.pdf`)
+
+    console.log("[v0] Enviando dados para Web3Forms com PDF anexado...") // Debug
 
     // Submit to Web3Forms
-    await submitToWeb3Forms(formData, experiences, education, languages, photoFile)
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData,
+    })
+
+    console.log("[v0] Resposta recebida:", response.status) // Debug
+
+    const result = await response.json()
+
+    if (response.ok && result.success) {
+      console.log("[v0] Currículo enviado com sucesso!") // Debug
+      showSuccessMessage()
+    } else {
+      throw new Error(result.message || "Erro ao enviar currículo")
+    }
   } catch (error) {
-    console.error("Erro ao enviar currículo:", error)
-    alert("Erro ao enviar currículo. Por favor, tente novamente.")
+    console.error("[v0] Erro ao enviar currículo:", error)
+
+    // Get error messages by language
+    const errorMessages = {
+      pt: "Erro ao enviar currículo. Por favor, tente novamente.",
+      en: "Error submitting resume. Please try again.",
+      es: "Error al enviar currículum. Por favor, inténtelo de nuevo.",
+    }
+
+    alert(errorMessages[currentLanguage] || errorMessages.pt)
+
     submitBtn.disabled = false
     loadingSpinner.style.display = "none"
     submitIcon.style.display = "inline-block"
   }
 })
-
-async function submitToWeb3Forms(formData, experiences, education, languages, photo) {
-  // Format the email message
-  let emailMessage = `
-=================================
-NOVO CURRÍCULO RECEBIDO
-=================================
-
-DADOS PESSOAIS
----------------------------------
-Nome: ${formData.fullName}
-E-mail: ${formData.email}
-Telefone: ${formData.phone}
-Endereço: ${formData.address || "Não informado"}
-
-`
-
-  if (formData.objective) {
-    emailMessage += `
-OBJETIVO PROFISSIONAL
----------------------------------
-${formData.objective}
-
-`
-  }
-
-  if (experiences.length > 0) {
-    emailMessage += `
-EXPERIÊNCIA PROFISSIONAL
----------------------------------
-`
-    experiences.forEach((exp, index) => {
-      emailMessage += `
-${index + 1}. ${exp.position || "Cargo não informado"}
-   Empresa: ${exp.company || "Não informado"}
-   Período: ${exp.period || "Não informado"}
-   Atividades: ${exp.activities || "Não informado"}
-`
-    })
-    emailMessage += "\n"
-  }
-
-  if (education.length > 0) {
-    emailMessage += `
-FORMAÇÃO ACADÊMICA
----------------------------------
-`
-    education.forEach((edu, index) => {
-      emailMessage += `
-${index + 1}. ${edu.course || "Curso não informado"}
-   Instituição: ${edu.institution || "Não informado"}
-   Período: ${edu.period || "Não informado"}
-`
-    })
-    emailMessage += "\n"
-  }
-
-  if (languages.length > 0) {
-    emailMessage += `
-IDIOMAS
----------------------------------
-`
-    languages.forEach((lang) => {
-      emailMessage += `• ${lang.name}: ${lang.level}\n`
-    })
-    emailMessage += "\n"
-  }
-
-  if (formData.skills) {
-    emailMessage += `
-HABILIDADES
----------------------------------
-${formData.skills}
-
-`
-  }
-
-  emailMessage += `
-=================================
-Currículo enviado via Sistema de Currículos - Grupo Lovina
-=================================
-`
-
-  // Prepare FormData for Web3Forms
-  const web3FormData = new FormData()
-  web3FormData.append("access_key", "89e08033-8211-49b4-8d5d-f217ce1e299e")
-  web3FormData.append("subject", `Novo Currículo: ${formData.fullName}`)
-  web3FormData.append("from_name", "Sistema de Currículos - Grupo Lovina")
-  web3FormData.append("name", formData.fullName)
-  web3FormData.append("email", formData.email)
-  web3FormData.append("phone", formData.phone)
-  web3FormData.append("message", emailMessage)
-  web3FormData.append("replyto", formData.email)
-
-  if (photo) {
-    web3FormData.append("attachment", photo)
-  }
-
-  // Submit to Web3Forms
-  const response = await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    body: web3FormData,
-  })
-
-  const result = await response.json()
-
-  if (response.ok) {
-    // Show success message
-    showSuccessMessage()
-  } else {
-    throw new Error(result.message || "Erro ao enviar currículo")
-  }
-}
 
 function showSuccessMessage() {
   const form = document.querySelector(".resume-form")
@@ -564,9 +667,10 @@ function showSuccessMessage() {
   successMessage.style.display = "block"
 
   // Setup continue button
-  document.getElementById("continueBtn").addEventListener("click", () => {
+  const continueBtn = document.getElementById("continueBtn")
+  continueBtn.onclick = () => {
     window.location.href = "trabalhe-conosco.html"
-  })
+  }
 }
 
 // Initialize

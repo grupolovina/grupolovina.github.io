@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="gerador-curriculo-styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="img/favicongrupofullano.png">
+    <!-- Adding jsPDF library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -241,8 +243,23 @@
 
                 <!-- Hidden Fields for Web3Forms -->
                 <input type="hidden" name="access_key" value="89e08033-8211-49b4-8d5d-f217ce1e299e">
-                <input type="hidden" name="subject" id="emailSubject" value="Novo Currículo Recebido">
+                <input type="hidden" name="subject" value="Novo Currículo - Grupo Lovina">
                 <input type="hidden" name="from_name" value="Sistema de Currículos - Grupo Lovina">
+                
+                <!-- Hidden fields for form data -->
+                <input type="hidden" name="nome_completo" id="hidden_fullName">
+                <input type="hidden" name="email_candidato" id="hidden_email">
+                <input type="hidden" name="telefone" id="hidden_phone">
+                <input type="hidden" name="endereco" id="hidden_address">
+                <input type="hidden" name="objetivo" id="hidden_objective">
+                <input type="hidden" name="experiencias" id="hidden_experiences">
+                <input type="hidden" name="formacoes" id="hidden_education">
+                <input type="hidden" name="idiomas" id="hidden_languages">
+                <input type="hidden" name="habilidades" id="hidden_skills">
+                <input type="hidden" name="replyto" id="hidden_replyto">
+
+                <!-- Honeypot -->
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
                 <!-- Botão Enviar -->
                 <div class="form-actions">
