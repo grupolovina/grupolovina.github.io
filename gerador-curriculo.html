@@ -8,7 +8,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="img/favicongrupofullano.png">
     <!-- Adding jsPDF library for PDF generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -218,27 +217,6 @@
                         <i class="fas fa-plus"></i>
                         <span data-translate="addLanguageButton">Adicionar Idioma</span>
                     </button>
-                </div>
-
-                <!-- Foto (Opcional) -->
-                <div class="form-section">
-                    <h2 class="section-title" data-translate="photoTitle">
-                        <i class="fas fa-camera"></i> Foto (Opcional)
-                    </h2>
-                    <div class="photo-upload-container">
-                        <input type="file" id="photoUpload" accept="image/*" style="display: none;">
-                        <label for="photoUpload" class="photo-upload-label">
-                            <div class="photo-preview" id="photoPreview">
-                                <i class="fas fa-user-circle photo-placeholder-icon"></i>
-                                <p data-translate="uploadPhotoText">Clique para adicionar foto</p>
-                                <p class="photo-size-hint" data-translate="photoSizeHint">Máximo: 10MB</p>
-                            </div>
-                        </label>
-                        <button type="button" class="btn-remove-photo" id="removePhoto" style="display: none;">
-                            <i class="fas fa-trash"></i>
-                            <span data-translate="removePhotoButton">Remover Foto</span>
-                        </button>
-                    </div>
                 </div>
 
                 <!-- Hidden Fields for Web3Forms -->

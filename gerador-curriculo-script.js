@@ -330,47 +330,6 @@ function removeLanguage(button) {
   }
 }
 
-let photoData = null
-
-document.getElementById("photoUpload").addEventListener("change", (e) => {
-  const file = e.target.files[0]
-
-  if (!file) return
-
-  // Check file size (10MB limit)
-  if (file.size > 10 * 1024 * 1024) {
-    alert("A foto deve ter no máximo 10MB!")
-    e.target.value = ""
-    return
-  }
-
-  const reader = new FileReader()
-
-  reader.onload = (event) => {
-    photoData = event.target.result
-    const preview = document.getElementById("photoPreview")
-    preview.innerHTML = `<img src="${photoData}" alt="Preview">`
-    preview.classList.add("has-image")
-    document.getElementById("removePhoto").style.display = "inline-flex"
-  }
-
-  reader.readAsDataURL(file)
-})
-
-document.getElementById("removePhoto").addEventListener("click", () => {
-  photoData = null
-  document.getElementById("photoUpload").value = ""
-  const preview = document.getElementById("photoPreview")
-  preview.classList.remove("has-image")
-  preview.innerHTML = `
-    <i class="fas fa-user-circle photo-placeholder-icon"></i>
-    <p data-translate="uploadPhotoText">Clique para adicionar foto</p>
-    <p class="photo-size-hint" data-translate="photoSizeHint">Máximo: 10MB</p>
-  `
-  document.getElementById("removePhoto").style.display = "none"
-  translatePage() // Re-translate after removing
-})
-
 document.getElementById("resumeForm").addEventListener("submit", async (e) => {
   e.preventDefault()
 
@@ -428,166 +387,6 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
       }
     })
 
-    const { jsPDF } = window.jspdf
-    const doc = new jsPDF()
-
-    const primaryColor = [33, 101, 155] // #21659B
-    const secondaryColor = [83, 215, 183] // #53D7B7
-    const textColor = [50, 50, 50]
-    const lightGray = [128, 128, 128]
-
-    let yPosition = 20
-
-    // Add photo if exists
-    if (photoData) {
-      try {
-        doc.addImage(photoData, "JPEG", 160, yPosition, 35, 35)
-      } catch (error) {
-        console.error("[v0] Erro ao adicionar foto ao PDF:", error)
-      }
-    }
-
-    // Header with name
-    doc.setFontSize(24)
-    doc.setTextColor(...primaryColor)
-    doc.text(fullName || "Nome Completo", 20, yPosition)
-    yPosition += 10
-
-    // Contact info
-    doc.setFontSize(11)
-    doc.setTextColor(...textColor)
-    if (email) doc.text(`Email: ${email}`, 20, yPosition)
-    yPosition += 6
-    if (phone) doc.text(`Telefone: ${phone}`, 20, yPosition)
-    yPosition += 6
-    if (address) doc.text(`Endereço: ${address}`, 20, yPosition)
-    yPosition += 12
-
-    // Objective
-    if (objective) {
-      doc.setFontSize(14)
-      doc.setTextColor(...primaryColor)
-      doc.text("Objetivo Profissional", 20, yPosition)
-      yPosition += 8
-      doc.setFontSize(11)
-      doc.setTextColor(...textColor)
-      const objectiveLines = doc.splitTextToSize(objective, 170)
-      doc.text(objectiveLines, 20, yPosition)
-      yPosition += objectiveLines.length * 6 + 6
-    }
-
-    // Experience
-    if (experiences.length > 0) {
-      doc.setFontSize(14)
-      doc.setTextColor(...primaryColor)
-      doc.text("Experiência Profissional", 20, yPosition)
-      yPosition += 8
-
-      experiences.forEach((exp) => {
-        if (yPosition > 250) {
-          doc.addPage()
-          yPosition = 20
-        }
-
-        doc.setFontSize(12)
-        doc.setTextColor(...textColor)
-        doc.text(exp.position || "Cargo não informado", 20, yPosition)
-        yPosition += 6
-
-        doc.setFontSize(10)
-        doc.setTextColor(...lightGray)
-        doc.text(`${exp.company || "Empresa"} | ${exp.period || "Período"}`, 20, yPosition)
-        yPosition += 6
-
-        if (exp.activities) {
-          doc.setFontSize(10)
-          doc.setTextColor(...textColor)
-          const activityLines = doc.splitTextToSize(exp.activities, 170)
-          doc.text(activityLines, 20, yPosition)
-          yPosition += activityLines.length * 5 + 4
-        }
-        yPosition += 4
-      })
-      yPosition += 4
-    }
-
-    // Education
-    if (education.length > 0) {
-      if (yPosition > 250) {
-        doc.addPage()
-        yPosition = 20
-      }
-
-      doc.setFontSize(14)
-      doc.setTextColor(...primaryColor)
-      doc.text("Formação Acadêmica", 20, yPosition)
-      yPosition += 8
-
-      education.forEach((edu) => {
-        if (yPosition > 270) {
-          doc.addPage()
-          yPosition = 20
-        }
-
-        doc.setFontSize(12)
-        doc.setTextColor(...textColor)
-        doc.text(edu.course || "Curso não informado", 20, yPosition)
-        yPosition += 6
-
-        doc.setFontSize(10)
-        doc.setTextColor(...lightGray)
-        doc.text(`${edu.institution || "Instituição"} | ${edu.period || "Período"}`, 20, yPosition)
-        yPosition += 8
-      })
-      yPosition += 4
-    }
-
-    // Languages
-    if (languages.length > 0) {
-      if (yPosition > 250) {
-        doc.addPage()
-        yPosition = 20
-      }
-
-      doc.setFontSize(14)
-      doc.setTextColor(...primaryColor)
-      doc.text("Idiomas", 20, yPosition)
-      yPosition += 8
-
-      languages.forEach((lang) => {
-        if (yPosition > 270) {
-          doc.addPage()
-          yPosition = 20
-        }
-
-        doc.setFontSize(11)
-        doc.setTextColor(...textColor)
-        doc.text(`• ${lang.name}: ${lang.level}`, 20, yPosition)
-        yPosition += 6
-      })
-      yPosition += 4
-    }
-
-    // Skills
-    if (skills) {
-      if (yPosition > 250) {
-        doc.addPage()
-        yPosition = 20
-      }
-
-      doc.setFontSize(14)
-      doc.setTextColor(...primaryColor)
-      doc.text("Habilidades", 20, yPosition)
-      yPosition += 8
-
-      doc.setFontSize(11)
-      doc.setTextColor(...textColor)
-      const skillsLines = doc.splitTextToSize(skills, 170)
-      doc.text(skillsLines, 20, yPosition)
-    }
-
-    const pdfBlob = doc.output("blob")
-
     // Format data for email
     const experiencesText = experiences
       .map(
@@ -620,68 +419,38 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
     const form = document.getElementById("resumeForm")
     const formData = new FormData(form)
 
-    // Add PDF as attachment
-    formData.append("attachment", pdfBlob, `Curriculo_${fullName.replace(/\s+/g, "_")}.pdf`)
-
-    console.log("[v0] Enviando dados para Web3Forms com PDF anexado...") // Debug
-
-    // Submit to Web3Forms
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       body: formData,
     })
 
-    console.log("[v0] Resposta recebida:", response.status) // Debug
+    const data = await response.json()
 
-    const result = await response.json()
-
-    if (response.ok && result.success) {
-      console.log("[v0] Currículo enviado com sucesso!") // Debug
-      showSuccessMessage()
+    if (data.success) {
+      // Show success message
+      document.querySelector(".resume-form").style.display = "none"
+      document.getElementById("successMessage").style.display = "block"
     } else {
-      throw new Error(result.message || "Erro ao enviar currículo")
+      throw new Error("Erro ao enviar")
     }
   } catch (error) {
-    console.error("[v0] Erro ao enviar currículo:", error)
+    console.error("[v0] Erro:", error)
+    alert("Erro ao enviar currículo. Por favor, tente novamente.")
 
-    // Get error messages by language
-    const errorMessages = {
-      pt: "Erro ao enviar currículo. Por favor, tente novamente.",
-      en: "Error submitting resume. Please try again.",
-      es: "Error al enviar currículum. Por favor, inténtelo de nuevo.",
-    }
-
-    alert(errorMessages[currentLanguage] || errorMessages.pt)
-
+    // Reset button
     submitBtn.disabled = false
     loadingSpinner.style.display = "none"
     submitIcon.style.display = "inline-block"
   }
 })
 
-function showSuccessMessage() {
-  const form = document.querySelector(".resume-form")
-  const successMessage = document.getElementById("successMessage")
+// Continue button
+document.getElementById("continueBtn").addEventListener("click", () => {
+  window.location.href = "trabalhe-conosco.html"
+})
 
-  form.style.display = "none"
-  successMessage.style.display = "block"
-
-  // Setup continue button
-  const continueBtn = document.getElementById("continueBtn")
-  continueBtn.onclick = () => {
-    window.location.href = "trabalhe-conosco.html"
-  }
-}
-
-// Initialize
-function init() {
+// Initialize on page load
+document.addEventListener("DOMContentLoaded", () => {
   setupLanguageSelector()
   changeLanguage(currentLanguage)
-}
-
-// Run initialization when DOM is ready
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", init)
-} else {
-  init()
-}
+})
