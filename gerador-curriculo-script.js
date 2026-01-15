@@ -430,8 +430,10 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
       }
     })
 
+    const photoFile = document.getElementById("photoUpload").files[0] || null
+
     // Submit to Web3Forms
-    await submitToWeb3Forms(formData, experiences, education, languages, photoData)
+    await submitToWeb3Forms(formData, experiences, education, languages, photoFile)
   } catch (error) {
     console.error("Erro ao enviar currículo:", error)
     alert("Erro ao enviar currículo. Por favor, tente novamente.")
@@ -525,7 +527,7 @@ Currículo enviado via Sistema de Currículos - Grupo Lovina
 
   // Prepare FormData for Web3Forms
   const web3FormData = new FormData()
-  web3FormData.append("access_key", "YOUR_WEB3FORMS_ACCESS_KEY") // Replace with actual key
+  web3FormData.append("access_key", "89e08033-8211-49b4-8d5d-f217ce1e299e")
   web3FormData.append("subject", `Novo Currículo: ${formData.fullName}`)
   web3FormData.append("from_name", "Sistema de Currículos - Grupo Lovina")
   web3FormData.append("name", formData.fullName)
@@ -534,7 +536,6 @@ Currículo enviado via Sistema de Currículos - Grupo Lovina
   web3FormData.append("message", emailMessage)
   web3FormData.append("replyto", formData.email)
 
-  // Add photo as attachment if present
   if (photo) {
     web3FormData.append("attachment", photo)
   }
