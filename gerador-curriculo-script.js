@@ -52,7 +52,7 @@ const translations = {
     workWithUs: "Trabalhe Conosco",
     reserveButton: "Reservar já",
     generatorTitle: "Crie seu Currículo Gratuitamente",
-    generatorSubtitle: "Preencha os campos abaixo e gere seu currículo em PDF",
+    generatorSubtitle: "Preencha os campos abaixo e envie seu currículo",
     personalDataTitle: "Dados Pessoais",
     fullNameLabel: "Nome Completo",
     emailLabel: "E-mail",
@@ -72,7 +72,7 @@ const translations = {
     addEducationButton: "Adicionar Formação",
     skillsTitle: "Habilidades",
     skillsLabel: "Liste suas habilidades (separadas por vírgula)",
-    generateButton: "Gerar Currículo em PDF",
+    generateButton: "Enviar Currículo",
     languagesTitle: "Idiomas",
     languageNameLabel: "Idioma",
     languageLevelLabel: "Nível",
@@ -88,6 +88,9 @@ const translations = {
     uploadPhotoText: "Clique para adicionar foto",
     photoSizeHint: "Máximo: 10MB",
     removePhotoButton: "Remover Foto",
+    successTitle: "Currículo Enviado com Sucesso!",
+    successSubtitle: "Obrigado por se candidatar! Entraremos em contato em breve.",
+    continueButton: "Voltar ao Início",
   },
   en: {
     home: "Grupo Lovina",
@@ -96,7 +99,7 @@ const translations = {
     workWithUs: "Work With Us",
     reserveButton: "Book Now",
     generatorTitle: "Create Your Resume for Free",
-    generatorSubtitle: "Fill in the fields below and generate your resume in PDF",
+    generatorSubtitle: "Fill in the fields below and submit your resume",
     personalDataTitle: "Personal Information",
     fullNameLabel: "Full Name",
     emailLabel: "E-mail",
@@ -116,7 +119,7 @@ const translations = {
     addEducationButton: "Add Education",
     skillsTitle: "Skills",
     skillsLabel: "List your skills (comma separated)",
-    generateButton: "Generate Resume PDF",
+    generateButton: "Submit Resume",
     languagesTitle: "Languages",
     languageNameLabel: "Language",
     languageLevelLabel: "Level",
@@ -132,6 +135,9 @@ const translations = {
     uploadPhotoText: "Click to add photo",
     photoSizeHint: "Maximum: 10MB",
     removePhotoButton: "Remove Photo",
+    successTitle: "Resume Submitted Successfully!",
+    successSubtitle: "Thank you for applying! We will contact you soon.",
+    continueButton: "Back to Home",
   },
   es: {
     home: "Grupo Lovina",
@@ -140,7 +146,7 @@ const translations = {
     workWithUs: "Trabaje con Nosotros",
     reserveButton: "Reservar Ahora",
     generatorTitle: "Crea tu Currículum Gratis",
-    generatorSubtitle: "Completa los campos a continuación y genera tu currículum en PDF",
+    generatorSubtitle: "Completa los campos a continuación y envía tu currículum",
     personalDataTitle: "Datos Personales",
     fullNameLabel: "Nombre Completo",
     emailLabel: "Correo Electrónico",
@@ -160,10 +166,10 @@ const translations = {
     addEducationButton: "Agregar Formación",
     skillsTitle: "Habilidades",
     skillsLabel: "Lista tus habilidades (separadas por coma)",
-    generateButton: "Generar Currículum en PDF",
+    generateButton: "Enviar Currículum",
     languagesTitle: "Idiomas",
     languageNameLabel: "Idioma",
-    languageLevelLabel: "Nivel",
+    languageLevelLabel: "Nível",
     selectLevel: "Seleccione",
     basicLevel: "Básico",
     intermediateLevel: "Intermedio",
@@ -176,6 +182,9 @@ const translations = {
     uploadPhotoText: "Haga clic para agregar foto",
     photoSizeHint: "Máximo: 10MB",
     removePhotoButton: "Eliminar Foto",
+    successTitle: "¡Currículum Enviado con Éxito!",
+    successSubtitle: "¡Gracias por postularte! Nos pondremos en contacto pronto.",
+    continueButton: "Volver al Inicio",
   },
 }
 
@@ -362,225 +371,201 @@ document.getElementById("removePhoto").addEventListener("click", () => {
   translatePage() // Re-translate after removing
 })
 
-// Generate PDF
 document.getElementById("resumeForm").addEventListener("submit", async (e) => {
   e.preventDefault()
 
-  // Get form data
-  const formData = {
-    fullName: document.getElementById("fullName").value,
-    email: document.getElementById("email").value,
-    phone: document.getElementById("phone").value,
-    address: document.getElementById("address").value,
-    objective: document.getElementById("objective").value,
-    skills: document.getElementById("skills").value,
+  const submitBtn = document.getElementById("submitBtn")
+  const loadingSpinner = document.getElementById("loadingSpinner")
+  const submitIcon = document.getElementById("submitIcon")
+
+  // Show loading
+  submitBtn.disabled = true
+  loadingSpinner.style.display = "inline-block"
+  submitIcon.style.display = "none"
+
+  try {
+    // Get form data
+    const formData = {
+      fullName: document.getElementById("fullName").value,
+      email: document.getElementById("email").value,
+      phone: document.getElementById("phone").value,
+      address: document.getElementById("address").value,
+      objective: document.getElementById("objective").value,
+      skills: document.getElementById("skills").value,
+    }
+
+    // Get experiences
+    const experiences = []
+    document.querySelectorAll(".experience-item").forEach((item) => {
+      const company = item.querySelector(".experience-company").value
+      const position = item.querySelector(".experience-position").value
+      const period = item.querySelector(".experience-period").value
+      const activities = item.querySelector(".experience-activities").value
+
+      if (company || position || period || activities) {
+        experiences.push({ company, position, period, activities })
+      }
+    })
+
+    // Get education
+    const education = []
+    document.querySelectorAll(".education-item").forEach((item) => {
+      const institution = item.querySelector(".education-institution").value
+      const course = item.querySelector(".education-course").value
+      const period = item.querySelector(".education-period").value
+
+      if (institution || course || period) {
+        education.push({ institution, course, period })
+      }
+    })
+
+    // Get languages
+    const languages = []
+    document.querySelectorAll(".language-item").forEach((item) => {
+      const name = item.querySelector(".language-name").value
+      const level = item.querySelector(".language-level").value
+
+      if (name && level) {
+        languages.push({ name, level })
+      }
+    })
+
+    // Submit to Web3Forms
+    await submitToWeb3Forms(formData, experiences, education, languages, photoData)
+  } catch (error) {
+    console.error("Erro ao enviar currículo:", error)
+    alert("Erro ao enviar currículo. Por favor, tente novamente.")
+    submitBtn.disabled = false
+    loadingSpinner.style.display = "none"
+    submitIcon.style.display = "inline-block"
   }
-
-  // Get experiences
-  const experiences = []
-  document.querySelectorAll(".experience-item").forEach((item) => {
-    const company = item.querySelector(".experience-company").value
-    const position = item.querySelector(".experience-position").value
-    const period = item.querySelector(".experience-period").value
-    const activities = item.querySelector(".experience-activities").value
-
-    if (company || position || period || activities) {
-      experiences.push({ company, position, period, activities })
-    }
-  })
-
-  // Get education
-  const education = []
-  document.querySelectorAll(".education-item").forEach((item) => {
-    const institution = item.querySelector(".education-institution").value
-    const course = item.querySelector(".education-course").value
-    const period = item.querySelector(".education-period").value
-
-    if (institution || course || period) {
-      education.push({ institution, course, period })
-    }
-  })
-
-  const languages = []
-  document.querySelectorAll(".language-item").forEach((item) => {
-    const name = item.querySelector(".language-name").value
-    const level = item.querySelector(".language-level").value
-
-    if (name && level) {
-      languages.push({ name, level })
-    }
-  })
-
-  // Generate PDF
-  generatePDF(formData, experiences, education, languages, photoData)
 })
 
-function generatePDF(formData, experiences, education, languages, photo) {
-  const { jsPDF } = window.jspdf
+async function submitToWeb3Forms(formData, experiences, education, languages, photo) {
+  // Format the email message
+  let emailMessage = `
+=================================
+NOVO CURRÍCULO RECEBIDO
+=================================
 
-  const doc = new jsPDF()
+DADOS PESSOAIS
+---------------------------------
+Nome: ${formData.fullName}
+E-mail: ${formData.email}
+Telefone: ${formData.phone}
+Endereço: ${formData.address || "Não informado"}
 
-  let yPosition = 20
-  const leftMargin = 20
-  const photoSize = 35
-  const hasPhoto = photo !== null
+`
 
-  // Add photo if available
-  if (hasPhoto) {
-    doc.addImage(photo, "JPEG", 160, 15, photoSize, photoSize)
-  }
-
-  // Header with name
-  doc.setFontSize(24) // Increased from 22
-  doc.setTextColor(37, 99, 235)
-  doc.text(formData.fullName, leftMargin, yPosition)
-  yPosition += 10
-
-  // Contact info
-  doc.setFontSize(11) // Increased from 10
-  doc.setTextColor(71, 85, 105)
-  doc.text(`${formData.email} | ${formData.phone}`, leftMargin, yPosition)
-  yPosition += 5
-  if (formData.address) {
-    doc.text(formData.address, leftMargin, yPosition)
-    yPosition += 10
-  } else {
-    yPosition += 5
-  }
-
-  // Objective
   if (formData.objective) {
-    yPosition += 5
-    doc.setFontSize(15) // Increased from 14
-    doc.setTextColor(30, 58, 138)
-    doc.text(translations[currentLanguage].objectiveTitle, leftMargin, yPosition)
-    yPosition += 8 // Increased spacing
+    emailMessage += `
+OBJETIVO PROFISSIONAL
+---------------------------------
+${formData.objective}
 
-    doc.setFontSize(11) // Increased from 10
-    doc.setTextColor(51, 65, 85)
-    const objectiveLines = doc.splitTextToSize(formData.objective, 170)
-    doc.text(objectiveLines, leftMargin, yPosition)
-    yPosition += objectiveLines.length * 5.5 + 5 // Increased line height
+`
   }
 
-  // Experience
   if (experiences.length > 0) {
-    yPosition += 5
-    if (yPosition > 250) {
-      doc.addPage()
-      yPosition = 20
-    }
-
-    doc.setFontSize(15) // Increased from 14
-    doc.setTextColor(30, 58, 138)
-    doc.text(translations[currentLanguage].experienceTitle, leftMargin, yPosition)
-    yPosition += 8 // Increased spacing
-
-    experiences.forEach((exp) => {
-      if (yPosition > 250) {
-        doc.addPage()
-        yPosition = 20
-      }
-
-      doc.setFontSize(12) // Increased from 11
-      doc.setTextColor(37, 99, 235)
-      doc.text(exp.position, leftMargin, yPosition)
-      yPosition += 6 // Increased spacing
-
-      doc.setFontSize(11) // Increased from 10
-      doc.setTextColor(71, 85, 105)
-      doc.text(`${exp.company} | ${exp.period}`, leftMargin, yPosition)
-      yPosition += 6 // Increased spacing
-
-      if (exp.activities) {
-        doc.setTextColor(51, 65, 85)
-        const activitiesLines = doc.splitTextToSize(exp.activities, 170)
-        doc.text(activitiesLines, leftMargin, yPosition)
-        yPosition += activitiesLines.length * 5.5 + 3 // Increased line height
-      }
-
-      yPosition += 3
+    emailMessage += `
+EXPERIÊNCIA PROFISSIONAL
+---------------------------------
+`
+    experiences.forEach((exp, index) => {
+      emailMessage += `
+${index + 1}. ${exp.position || "Cargo não informado"}
+   Empresa: ${exp.company || "Não informado"}
+   Período: ${exp.period || "Não informado"}
+   Atividades: ${exp.activities || "Não informado"}
+`
     })
+    emailMessage += "\n"
   }
 
-  // Education
   if (education.length > 0) {
-    yPosition += 5
-    if (yPosition > 250) {
-      doc.addPage()
-      yPosition = 20
-    }
-
-    doc.setFontSize(15) // Increased from 14
-    doc.setTextColor(30, 58, 138)
-    doc.text(translations[currentLanguage].educationTitle, leftMargin, yPosition)
-    yPosition += 8 // Increased spacing
-
-    education.forEach((edu) => {
-      if (yPosition > 250) {
-        doc.addPage()
-        yPosition = 20
-      }
-
-      doc.setFontSize(12) // Increased from 11
-      doc.setTextColor(37, 99, 235)
-      doc.text(edu.course, leftMargin, yPosition)
-      yPosition += 6 // Increased spacing
-
-      doc.setFontSize(11) // Increased from 10
-      doc.setTextColor(71, 85, 105)
-      doc.text(`${edu.institution} | ${edu.period}`, leftMargin, yPosition)
-      yPosition += 8
+    emailMessage += `
+FORMAÇÃO ACADÊMICA
+---------------------------------
+`
+    education.forEach((edu, index) => {
+      emailMessage += `
+${index + 1}. ${edu.course || "Curso não informado"}
+   Instituição: ${edu.institution || "Não informado"}
+   Período: ${edu.period || "Não informado"}
+`
     })
+    emailMessage += "\n"
   }
 
   if (languages.length > 0) {
-    yPosition += 5
-    if (yPosition > 250) {
-      doc.addPage()
-      yPosition = 20
-    }
-
-    doc.setFontSize(15) // Increased from 14
-    doc.setTextColor(30, 58, 138)
-    doc.text(translations[currentLanguage].languagesTitle, leftMargin, yPosition)
-    yPosition += 8 // Increased spacing
-
-    doc.setFontSize(11) // Increased from 10
-    doc.setTextColor(51, 65, 85)
-
+    emailMessage += `
+IDIOMAS
+---------------------------------
+`
     languages.forEach((lang) => {
-      if (yPosition > 250) {
-        doc.addPage()
-        yPosition = 20
-      }
-
-      doc.text(`${lang.name}: ${lang.level}`, leftMargin, yPosition)
-      yPosition += 6
+      emailMessage += `• ${lang.name}: ${lang.level}\n`
     })
+    emailMessage += "\n"
   }
 
-  // Skills
   if (formData.skills) {
-    yPosition += 5
-    if (yPosition > 250) {
-      doc.addPage()
-      yPosition = 20
-    }
+    emailMessage += `
+HABILIDADES
+---------------------------------
+${formData.skills}
 
-    doc.setFontSize(15) // Increased from 14
-    doc.setTextColor(30, 58, 138)
-    doc.text(translations[currentLanguage].skillsTitle, leftMargin, yPosition)
-    yPosition += 8 // Increased spacing
-
-    doc.setFontSize(11) // Increased from 10
-    doc.setTextColor(51, 65, 85)
-    const skillsLines = doc.splitTextToSize(formData.skills, 170)
-    doc.text(skillsLines, leftMargin, yPosition)
+`
   }
 
-  // Save PDF
-  doc.save(`curriculo_${formData.fullName.replace(/\s+/g, "_")}.pdf`)
+  emailMessage += `
+=================================
+Currículo enviado via Sistema de Currículos - Grupo Lovina
+=================================
+`
+
+  // Prepare FormData for Web3Forms
+  const web3FormData = new FormData()
+  web3FormData.append("access_key", "YOUR_WEB3FORMS_ACCESS_KEY") // Replace with actual key
+  web3FormData.append("subject", `Novo Currículo: ${formData.fullName}`)
+  web3FormData.append("from_name", "Sistema de Currículos - Grupo Lovina")
+  web3FormData.append("name", formData.fullName)
+  web3FormData.append("email", formData.email)
+  web3FormData.append("phone", formData.phone)
+  web3FormData.append("message", emailMessage)
+  web3FormData.append("replyto", formData.email)
+
+  // Add photo as attachment if present
+  if (photo) {
+    web3FormData.append("attachment", photo)
+  }
+
+  // Submit to Web3Forms
+  const response = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    body: web3FormData,
+  })
+
+  const result = await response.json()
+
+  if (response.ok) {
+    // Show success message
+    showSuccessMessage()
+  } else {
+    throw new Error(result.message || "Erro ao enviar currículo")
+  }
+}
+
+function showSuccessMessage() {
+  const form = document.querySelector(".resume-form")
+  const successMessage = document.getElementById("successMessage")
+
+  form.style.display = "none"
+  successMessage.style.display = "block"
+
+  // Setup continue button
+  document.getElementById("continueBtn").addEventListener("click", () => {
+    window.location.href = "trabalhe-conosco.html"
+  })
 }
 
 // Initialize

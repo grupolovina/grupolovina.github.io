@@ -518,8 +518,115 @@ body {
   box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
 }
 
+.btn-generate:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .btn-generate i {
   font-size: 1.5rem;
+}
+
+/* Added loading spinner styles for form submission */
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Added success message styles */
+.success-message {
+  background: white;
+  border-radius: 1rem;
+  padding: 3rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: #10b981;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: white;
+  font-size: 2.5rem;
+  animation: successPulse 0.6s ease-out;
+}
+
+@keyframes successPulse {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.success-title {
+  font-family: "NeueAlteGrotesk-Bold", sans-serif;
+  font-size: 1.75rem;
+  color: #10b981;
+  margin-bottom: 1rem;
+}
+
+.success-subtitle {
+  font-family: "NeueAlteGrotesk-Regular", sans-serif;
+  color: #64748b;
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.continue-btn {
+  background: linear-gradient(to right, #1c7dff, #0051c4);
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-family: "NeueAlteGrotesk-Bold", sans-serif;
+}
+
+.continue-btn:hover {
+  background: linear-gradient(to right, #2289ff, #1c7dff);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(28, 125, 255, 0.3);
 }
 
 /* Dark Mode Styles */
@@ -660,6 +767,19 @@ body.dark-mode .photo-preview p {
 
 body.dark-mode .photo-size-hint {
   color: #6b7280 !important;
+}
+
+/* Added dark mode styles for success message */
+body.dark-mode .success-message {
+  background: #1a2332;
+}
+
+body.dark-mode .success-title {
+  color: #34d399;
+}
+
+body.dark-mode .success-subtitle {
+  color: #d1d5db;
 }
 
 body.dark-mode .experience-item,

@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Currículo - Grupo Lovina</title>
+    <title>Cadastrar Currículo - Grupo Lovina</title>
     <link rel="stylesheet" href="gerador-curriculo-styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="img/favicongrupofullano.png">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -63,7 +62,7 @@
     <main class="generator-main">
         <div class="generator-container">
             <h1 class="generator-title" data-translate="generatorTitle">Crie seu Currículo Gratuitamente</h1>
-            <p class="generator-subtitle" data-translate="generatorSubtitle">Preencha os campos abaixo e gere seu currículo em PDF</p>
+            <p class="generator-subtitle" data-translate="generatorSubtitle">Preencha os campos abaixo e envie seu currículo</p>
 
             <form id="resumeForm" class="resume-form">
                 <!-- Dados Pessoais -->
@@ -240,14 +239,31 @@
                     </div>
                 </div>
 
-                <!-- Botão Gerar -->
+                <!-- Hidden Fields for Web3Forms -->
+                <input type="hidden" name="access_key" value="89e08033-8211-49b4-8d5d-f217ce1e299e">
+                <input type="hidden" name="subject" id="emailSubject" value="Novo Currículo Recebido">
+                <input type="hidden" name="from_name" value="Sistema de Currículos - Grupo Lovina">
+
+                <!-- Botão Enviar -->
                 <div class="form-actions">
-                    <button type="submit" class="btn-generate">
-                        <i class="fas fa-file-pdf"></i>
-                        <span data-translate="generateButton">Gerar Currículo em PDF</span>
+                    <button type="submit" class="btn-generate" id="submitBtn">
+                        <!-- Loading Spinner -->
+                        <div class="loading-spinner" id="loadingSpinner" style="display: none;"></div>
+                        <i class="fas fa-paper-plane" id="submitIcon"></i>
+                        <span data-translate="generateButton">Enviar Currículo</span>
                     </button>
                 </div>
             </form>
+
+            <!-- Success Message Container -->
+            <div class="success-message" id="successMessage" style="display: none;">
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h2 class="success-title" data-translate="successTitle">Currículo Enviado com Sucesso!</h2>
+                <p class="success-subtitle" data-translate="successSubtitle">Obrigado por se candidatar! Entraremos em contato em breve.</p>
+                <button class="continue-btn" id="continueBtn" data-translate="continueButton">Voltar ao Início</button>
+            </div>
         </div>
     </main>
 
