@@ -62,8 +62,8 @@
     <!-- Main Content -->
     <main class="generator-main">
         <div class="generator-container">
-            <h1 class="generator-title" data-translate="generatorTitle">Cadastre-se no nosso sistema</h1>
-            <p class="generator-subtitle" data-translate="generatorSubtitle">Preencha os campos abaixo e envie seus dados</p>
+            <h1 class="generator-title" data-translate="generatorTitle">Crie seu Currículo Gratuitamente</h1>
+            <p class="generator-subtitle" data-translate="generatorSubtitle">Preencha os campos abaixo e envie seu currículo</p>
 
             <form id="resumeForm" class="resume-form">
                 <!-- Dados Pessoais -->
@@ -97,7 +97,7 @@
                         <i class="fas fa-bullseye"></i> Objetivo Profissional
                     </h2>
                     <div class="form-group">
-                        <label for="objective" data-translate="objectiveLabel">Descreva seu objetivo e a sua pretensão de cargo [caso tenha]</label>
+                        <label for="objective" data-translate="objectiveLabel">Descreva seu objetivo</label>
                         <textarea id="objective" rows="3" placeholder="Ex: Busco uma oportunidade na área de..."></textarea>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                     </button>
                 </div>
 
-                <!-- Educação -->
+                <!-- Formação Acadêmica -->
                 <div class="form-section">
                     <h2 class="section-title" data-translate="educationTitle">
                         <i class="fas fa-graduation-cap"></i> Formação Acadêmica
@@ -148,12 +148,25 @@
                         <div class="education-item">
                             <div class="form-grid">
                                 <div class="form-group">
-                                    <label data-translate="institutionLabel">Instituição</label>
-                                    <input type="text" class="education-institution" placeholder="Nome da instituição">
+                                    <label data-translate="educationLevelLabel">Formação</label>
+                                    <select class="education-level">
+                                        <option value="" data-translate="selectEducation">Selecione sua formação</option>
+                                        <option value="Educação Básica" data-translate="basicEducation">Educação Básica</option>
+                                        <option value="Ensino Fundamental I - Completo" data-translate="elementaryIComplete">Ensino Fundamental I - Completo</option>
+                                        <option value="Ensino Fundamental I - Incompleto" data-translate="elementaryIIncomplete">Ensino Fundamental I - Incompleto</option>
+                                        <option value="Ensino Fundamental II - Completo" data-translate="elementaryIIComplete">Ensino Fundamental II - Completo</option>
+                                        <option value="Ensino Fundamental II - Incompleto" data-translate="elementaryIIIncomplete">Ensino Fundamental II - Incompleto</option>
+                                        <option value="Ensino Médio - Completo" data-translate="highSchoolComplete">Ensino Médio - Completo</option>
+                                        <option value="Ensino Médio - Incompleto" data-translate="highSchoolIncomplete">Ensino Médio - Incompleto</option>
+                                        <option value="Ensino Superior - Completo" data-translate="higherEducationComplete">Ensino Superior - Completo</option>
+                                        <option value="Ensino Superior - Incompleto" data-translate="higherEducationIncomplete">Ensino Superior - Incompleto</option>
+                                        <option value="Pós-Graduação - Completo" data-translate="postGradComplete">Pós-Graduação - Completo</option>
+                                        <option value="Pós-Graduação - Incompleto" data-translate="postGradIncomplete">Pós-Graduação - Incompleto</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label data-translate="courseLabel">Curso</label>
-                                    <input type="text" class="education-course" placeholder="Nome do curso">
+                                    <label data-translate="institutionLabel">Instituição</label>
+                                    <input type="text" class="education-institution" placeholder="Nome da instituição">
                                 </div>
                                 <div class="form-group">
                                     <label data-translate="periodLabel">Período</label>
@@ -169,6 +182,39 @@
                     <button type="button" class="btn-add" id="addEducation">
                         <i class="fas fa-plus"></i>
                         <span data-translate="addEducationButton">Adicionar Formação</span>
+                    </button>
+                </div>
+
+                <!-- Cursos -->
+                <div class="form-section">
+                    <h2 class="section-title" data-translate="coursesTitle">
+                        <i class="fas fa-certificate"></i> Cursos
+                    </h2>
+                    <div id="coursesContainer">
+                        <div class="course-item">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label data-translate="courseNameLabel">Nome do Curso</label>
+                                    <input type="text" class="course-name" placeholder="Ex: Excel Avançado">
+                                </div>
+                                <div class="form-group">
+                                    <label data-translate="courseInstitutionLabel">Instituição</label>
+                                    <input type="text" class="course-institution" placeholder="Nome da instituição">
+                                </div>
+                                <div class="form-group">
+                                    <label data-translate="periodLabel">Período</label>
+                                    <input type="text" class="course-period" placeholder="2023">
+                                </div>
+                            </div>
+                            <button type="button" class="btn-remove" onclick="removeCourse(this)">
+                                <i class="fas fa-times"></i>
+                                <span data-translate="removeButton">Remover</span>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add" id="addCourse">
+                        <i class="fas fa-plus"></i>
+                        <span data-translate="addCourseButton">Adicionar Curso</span>
                     </button>
                 </div>
 
@@ -232,6 +278,7 @@
                 <input type="hidden" name="objetivo" id="hidden_objective">
                 <input type="hidden" name="experiencias" id="hidden_experiences">
                 <input type="hidden" name="formacoes" id="hidden_education">
+                <input type="hidden" name="cursos" id="hidden_courses">
                 <input type="hidden" name="idiomas" id="hidden_languages">
                 <input type="hidden" name="habilidades" id="hidden_skills">
                 <input type="hidden" name="replyto" id="hidden_replyto">

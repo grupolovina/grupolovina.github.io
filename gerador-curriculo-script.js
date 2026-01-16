@@ -51,15 +51,15 @@ const translations = {
     faq: "FAQ",
     workWithUs: "Trabalhe Conosco",
     reserveButton: "Reservar já",
-    generatorTitle: "Cadastre-se no nosso sistema",
-    generatorSubtitle: "Preencha os campos abaixo e envie seus dados",
+    generatorTitle: "Cadastre-se no nosso site",
+    generatorSubtitle: "Preencha os campos abaixo e envie seu currículo",
     personalDataTitle: "Dados Pessoais",
     fullNameLabel: "Nome Completo",
     emailLabel: "E-mail",
     phoneLabel: "Telefone",
     addressLabel: "Endereço",
     objectiveTitle: "Objetivo Profissional",
-    objectiveLabel: "Descreva seu objetivo e a sua pretensão de cargo [caso tenha]",
+    objectiveLabel: "Descreva seu objetivo e sua pretensão de cargo (caso tenha)",
     experienceTitle: "Experiência Profissional",
     companyLabel: "Empresa",
     positionLabel: "Cargo",
@@ -67,9 +67,25 @@ const translations = {
     activitiesLabel: "Atividades",
     addExperienceButton: "Adicionar Experiência",
     educationTitle: "Formação Acadêmica",
+    educationLevelLabel: "Formação",
+    selectEducation: "Selecione sua formação",
+    basicEducation: "Educação Básica",
+    elementaryIComplete: "Ensino Fundamental I - Completo",
+    elementaryIIncomplete: "Ensino Fundamental I - Incompleto",
+    elementaryIIComplete: "Ensino Fundamental II - Completo",
+    elementaryIIIncomplete: "Ensino Fundamental II - Incompleto",
+    highSchoolComplete: "Ensino Médio - Completo",
+    highSchoolIncomplete: "Ensino Médio - Incompleto",
+    higherEducationComplete: "Ensino Superior - Completo",
+    higherEducationIncomplete: "Ensino Superior - Incompleto",
+    postGradComplete: "Pós-Graduação - Completo",
+    postGradIncomplete: "Pós-Graduação - Incompleto",
     institutionLabel: "Instituição",
-    courseLabel: "Curso",
     addEducationButton: "Adicionar Formação",
+    coursesTitle: "Cursos",
+    courseNameLabel: "Nome do Curso",
+    courseInstitutionLabel: "Instituição",
+    addCourseButton: "Adicionar Curso",
     skillsTitle: "Habilidades",
     skillsLabel: "Liste suas habilidades (separadas por vírgula)",
     generateButton: "Enviar Currículo",
@@ -84,10 +100,6 @@ const translations = {
     nativeLevel: "Nativo",
     addLanguageButton: "Adicionar Idioma",
     removeButton: "Remover",
-    photoTitle: "Foto (Opcional)",
-    uploadPhotoText: "Clique para adicionar foto",
-    photoSizeHint: "Máximo: 10MB",
-    removePhotoButton: "Remover Foto",
     successTitle: "Currículo Enviado com Sucesso!",
     successSubtitle: "Obrigado por se candidatar! Entraremos em contato em breve.",
     continueButton: "Voltar ao Início",
@@ -98,15 +110,15 @@ const translations = {
     faq: "FAQ",
     workWithUs: "Work With Us",
     reserveButton: "Book Now",
-    generatorTitle: "Register in our system",
-    generatorSubtitle: "Fill in the fields below and submit your information",
+    generatorTitle: "Sign up on our website",
+    generatorSubtitle: "Fill in the fields below and submit your resume",
     personalDataTitle: "Personal Information",
     fullNameLabel: "Full Name",
     emailLabel: "E-mail",
     phoneLabel: "Phone",
     addressLabel: "Address",
     objectiveTitle: "Professional Objective",
-    objectiveLabel: "Describe your objective and desired position [if applicable].",
+    objectiveLabel: "Describe your career objective and your desired position (if any).",
     experienceTitle: "Professional Experience",
     companyLabel: "Company",
     positionLabel: "Position",
@@ -114,9 +126,25 @@ const translations = {
     activitiesLabel: "Activities",
     addExperienceButton: "Add Experience",
     educationTitle: "Education",
+    educationLevelLabel: "Education Level",
+    selectEducation: "Select your education",
+    basicEducation: "Basic Education",
+    elementaryIComplete: "Elementary School I - Complete",
+    elementaryIIncomplete: "Elementary School I - Incomplete",
+    elementaryIIComplete: "Elementary School II - Complete",
+    elementaryIIIncomplete: "Elementary School II - Incomplete",
+    highSchoolComplete: "High School - Complete",
+    highSchoolIncomplete: "High School - Incomplete",
+    higherEducationComplete: "Higher Education - Complete",
+    higherEducationIncomplete: "Higher Education - Incomplete",
+    postGradComplete: "Postgraduate - Complete",
+    postGradIncomplete: "Postgraduate - Incomplete",
     institutionLabel: "Institution",
-    courseLabel: "Course",
     addEducationButton: "Add Education",
+    coursesTitle: "Courses",
+    courseNameLabel: "Course Name",
+    courseInstitutionLabel: "Institution",
+    addCourseButton: "Add Course",
     skillsTitle: "Skills",
     skillsLabel: "List your skills (comma separated)",
     generateButton: "Submit Resume",
@@ -131,10 +159,6 @@ const translations = {
     nativeLevel: "Native",
     addLanguageButton: "Add Language",
     removeButton: "Remove",
-    photoTitle: "Photo (Optional)",
-    uploadPhotoText: "Click to add photo",
-    photoSizeHint: "Maximum: 10MB",
-    removePhotoButton: "Remove Photo",
     successTitle: "Resume Submitted Successfully!",
     successSubtitle: "Thank you for applying! We will contact you soon.",
     continueButton: "Back to Home",
@@ -145,15 +169,15 @@ const translations = {
     faq: "Preguntas Frecuentes",
     workWithUs: "Trabaje con Nosotros",
     reserveButton: "Reservar Ahora",
-    generatorTitle: "Regístrese en nuestro sistema",
-    generatorSubtitle: "Fill in the fields below and submit your information",
+    generatorTitle: "Regístrese en nuestro sitio web",
+    generatorSubtitle: "Completa los campos a continuación y envía tu currículum",
     personalDataTitle: "Datos Personales",
     fullNameLabel: "Nombre Completo",
     emailLabel: "Correo Electrónico",
     phoneLabel: "Teléfono",
     addressLabel: "Dirección",
     objectiveTitle: "Objetivo Profesional",
-    objectiveLabel: "Describe tu objetivo y el puesto deseado [si corresponde].",
+    objectiveLabel: "Describa su objetivo profesional y el cargo al que aspira (si aplica)",
     experienceTitle: "Experiencia Profesional",
     companyLabel: "Empresa",
     positionLabel: "Cargo",
@@ -161,15 +185,31 @@ const translations = {
     activitiesLabel: "Actividades",
     addExperienceButton: "Agregar Experiencia",
     educationTitle: "Formación Académica",
+    educationLevelLabel: "Formación",
+    selectEducation: "Seleccione su formación",
+    basicEducation: "Educación Básica",
+    elementaryIComplete: "Educación Primaria I - Completo",
+    elementaryIIncomplete: "Educación Primaria I - Incompleto",
+    elementaryIIComplete: "Educación Primaria II - Completo",
+    elementaryIIIncomplete: "Educación Primaria II - Incompleto",
+    highSchoolComplete: "Educación Secundaria - Completo",
+    highSchoolIncomplete: "Educación Secundaria - Incompleto",
+    higherEducationComplete: "Educación Superior - Completo",
+    higherEducationIncomplete: "Educación Superior - Incompleto",
+    postGradComplete: "Posgrado - Completo",
+    postGradIncomplete: "Posgrado - Incompleto",
     institutionLabel: "Institución",
-    courseLabel: "Curso",
     addEducationButton: "Agregar Formación",
+    coursesTitle: "Cursos",
+    courseNameLabel: "Nombre del Curso",
+    courseInstitutionLabel: "Institución",
+    addCourseButton: "Agregar Curso",
     skillsTitle: "Habilidades",
     skillsLabel: "Lista tus habilidades (separadas por coma)",
     generateButton: "Enviar Currículum",
     languagesTitle: "Idiomas",
     languageNameLabel: "Idioma",
-    languageLevelLabel: "Nível",
+    languageLevelLabel: "Nivel",
     selectLevel: "Seleccione",
     basicLevel: "Básico",
     intermediateLevel: "Intermedio",
@@ -178,10 +218,6 @@ const translations = {
     nativeLevel: "Nativo",
     addLanguageButton: "Agregar Idioma",
     removeButton: "Eliminar",
-    photoTitle: "Foto (Opcional)",
-    uploadPhotoText: "Haga clic para agregar foto",
-    photoSizeHint: "Máximo: 10MB",
-    removePhotoButton: "Eliminar Foto",
     successTitle: "¡Currículum Enviado con Éxito!",
     successSubtitle: "¡Gracias por postularte! Nos pondremos en contacto pronto.",
     continueButton: "Volver al Inicio",
@@ -281,23 +317,58 @@ document.getElementById("addEducation").addEventListener("click", () => {
   const container = document.getElementById("educationContainer")
   const newItem = document.querySelector(".education-item").cloneNode(true)
 
-  // Clear all inputs
-  newItem.querySelectorAll("input").forEach((input) => {
+  // Clear all inputs and selects
+  newItem.querySelectorAll("input, select").forEach((input) => {
     input.value = ""
   })
 
   container.appendChild(newItem)
+  translatePage() // Re-translate after adding
 })
 
 function removeEducation(button) {
   const container = document.getElementById("educationContainer")
   const items = container.querySelectorAll(".education-item")
 
-  // Keep at least one item
+  // Allow removing all items since it's optional
   if (items.length > 1) {
     button.closest(".education-item").remove()
   } else {
-    alert("Você precisa manter pelo menos uma formação!")
+    // Clear the last item instead of removing
+    const item = button.closest(".education-item")
+    item.querySelectorAll("input, select").forEach((input) => {
+      input.value = ""
+    })
+  }
+}
+
+// Add Course
+document.getElementById("addCourse").addEventListener("click", () => {
+  const container = document.getElementById("coursesContainer")
+  const newItem = document.querySelector(".course-item").cloneNode(true)
+
+  // Clear all inputs
+  newItem.querySelectorAll("input").forEach((input) => {
+    input.value = ""
+  })
+
+  container.appendChild(newItem)
+  translatePage()
+})
+
+function removeCourse(button) {
+  const container = document.getElementById("coursesContainer")
+  const items = container.querySelectorAll(".course-item")
+
+  // Allow removing all items since it's optional
+  if (items.length > 1) {
+    button.closest(".course-item").remove()
+  } else {
+    // Clear the last item instead of removing
+    const item = button.closest(".course-item")
+    item.querySelectorAll("input").forEach((input) => {
+      input.value = ""
+    })
   }
 }
 
@@ -367,12 +438,24 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
     // Get education
     const education = []
     document.querySelectorAll(".education-item").forEach((item) => {
+      const level = item.querySelector(".education-level").value
       const institution = item.querySelector(".education-institution").value
-      const course = item.querySelector(".education-course").value
       const period = item.querySelector(".education-period").value
 
-      if (institution || course || period) {
-        education.push({ institution, course, period })
+      if (level || institution || period) {
+        education.push({ level, institution, period })
+      }
+    })
+
+    // Get courses
+    const courses = []
+    document.querySelectorAll(".course-item").forEach((item) => {
+      const name = item.querySelector(".course-name").value
+      const institution = item.querySelector(".course-institution").value
+      const period = item.querySelector(".course-period").value
+
+      if (name || institution || period) {
+        courses.push({ name, institution, period })
       }
     })
 
@@ -398,7 +481,14 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
     const educationText = education
       .map(
         (edu, i) =>
-          `${i + 1}. ${edu.course || "Curso não informado"}\n   Instituição: ${edu.institution || "Não informado"}\n   Período: ${edu.period || "Não informado"}`,
+          `${i + 1}. ${edu.level || "Formação não informada"}\n   Instituição: ${edu.institution || "Não informado"}\n   Período: ${edu.period || "Não informado"}`,
+      )
+      .join("\n\n")
+
+    const coursesText = courses
+      .map(
+        (course, i) =>
+          `${i + 1}. ${course.name || "Curso não informado"}\n   Instituição: ${course.institution || "Não informado"}\n   Período: ${course.period || "Não informado"}`,
       )
       .join("\n\n")
 
@@ -412,6 +502,7 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
     document.getElementById("hidden_objective").value = objective || "Não informado"
     document.getElementById("hidden_experiences").value = experiencesText || "Não informado"
     document.getElementById("hidden_education").value = educationText || "Não informado"
+    document.getElementById("hidden_courses").value = coursesText || "Não informado"
     document.getElementById("hidden_languages").value = languagesText || "Não informado"
     document.getElementById("hidden_skills").value = skills || "Não informado"
     document.getElementById("hidden_replyto").value = email
