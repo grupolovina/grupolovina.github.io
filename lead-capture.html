@@ -30,6 +30,8 @@
             padding: 3rem;
             max-width: 500px;
             width: 100%;
+            max-height: 95vh;
+            overflow-y: auto;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             text-align: center;
             position: relative;
@@ -94,7 +96,8 @@
             font-weight: 600;
         }
 
-        .form-group-lead input {
+        .form-group-lead input,
+        .form-group-lead select {
             width: 100%;
             padding: 1rem;
             border: 2px solid #e5e7eb;
@@ -103,17 +106,46 @@
             font-family: "NeueAlteGrotesk-Regular", sans-serif;
             transition: all 0.3s ease;
             box-sizing: border-box;
+            background-color: white;
+            color: #333;
         }
 
-        .form-group-lead input:focus {
+        .form-group-lead select {
+            cursor: pointer;
+        }
+
+        .form-group-lead input:focus,
+        .form-group-lead select:focus {
             outline: none;
             border-color: #2563eb;
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        .form-group-lead input.error {
+        .form-group-lead input.error,
+        .form-group-lead select.error {
             border-color: #dc2626;
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .source-detail-input {
+            margin-top: 0.75rem;
+            display: none;
+        }
+
+        .source-detail-input.visible {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .error-message {
@@ -248,18 +280,23 @@
             color: #e2e8f0;
         }
 
-        body.dark-mode .form-group-lead input {
+        body.dark-mode .form-group-lead input,
+        body.dark-mode .form-group-lead select {
             background: #1a2942;
             color: #ffffff;
             border-color: #3b82f6;
         }
 
-        body.dark-mode .form-group-lead input:focus {
+
+
+        body.dark-mode .form-group-lead input:focus,
+        body.dark-mode .form-group-lead select:focus {
             border-color: #60a5fa;
             box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
         }
 
-        body.dark-mode .form-group-lead input.error {
+        body.dark-mode .form-group-lead input.error,
+        body.dark-mode .form-group-lead select.error {
             border-color: #dc2626;
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
         }
@@ -672,6 +709,32 @@
                         <input type="tel" id="leadPhone" name="phone" required pattern="[0-9\s$$$$\-\+]*" inputmode="numeric">
                         <div class="error-message" id="phoneError"></div>
                     </div>
+
+                    <div class="form-group-lead">
+                        <label for="leadSource" data-translate="sourceLabel">Como conheceu nosso local? *</label>
+                        <select id="leadSource" name="source" required>
+                            <option value="" disabled selected data-translate-option="sourcePlaceholder">Selecione uma opção</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="WhatsApp">WhatsApp</option>
+                            <option value="TikTok">TikTok</option>
+                            <option value="Google">Google</option>
+                            <option value="Google Maps" data-translate-option="googleMaps">Google Maps</option>
+                            <option value="Site">Site</option>
+                            <option value="Anuncio Online" data-translate-option="onlineAd">Anúncio online</option>
+                            <option value="Influenciador" data-translate-option="influencer">Influenciador</option>
+                            <option value="Evento" data-translate-option="event">Evento ou ação promocional</option>
+                            <option value="Guia Turistico" data-translate-option="touristGuide">Guia turistico / Concierge</option>
+                            <option value="Hotel Pousada" data-translate-option="hotelInn">Hotel / Pousada</option>
+                            <option value="Passando pelo local" data-translate-option="passingBy">Passando pelo local</option>
+                            <option value="Recomendacao" data-translate-option="recommendation">Recomendacao</option>
+                            <option value="Outros" data-translate-option="others">Outros</option>
+                        </select>
+                        <div class="error-message" id="sourceError"></div>
+                        <input type="text" id="leadSourceDetail" name="source_detail" class="source-detail-input" placeholder="Por favor, especifique..." data-translate-placeholder="sourceDetailPlaceholder">
+                        <div class="error-message" id="sourceDetailError"></div>
+                    </div>
+
                     <input type="hidden" name="access_key" value="bf89f4b9-495d-443e-9c73-bc84dcc29eb4">
                     <button type="submit" class="submit-btn" id="submitBtn">
                         <div class="loading-spinner" id="loadingSpinner"></div>
@@ -746,6 +809,22 @@
                 emailRequired: "Por favor, digite um e-mail válido",
                 phoneRequired: "Por favor, digite um telefone válido",
                 phoneInvalid: "Por favor, digite apenas números no telefone",
+                sourceLabel: "Como conheceu nosso local? *",
+                sourcePlaceholder: "Selecione uma opção",
+                sourceRequired: "Por favor, selecione como conheceu nosso local",
+                sourceDetailPlaceholder: "Por favor, especifique...",
+                sourceDetailRequired: "Por favor, especifique a origem",
+                sourceDetailRecommendation: "Quem fez a recomendacao?",
+                sourceDetailOthers: "Especifique como nos conheceu",
+                googleMaps: "Google Maps",
+                onlineAd: "Anúncio online",
+                influencer: "Influenciador",
+                event: "Evento ou ação promocional",
+                touristGuide: "Guia turístico",
+                hotelInn: "Hotel / Pousada",
+                passingBy: "Passando pelo local",
+                recommendation: "Recomendação",
+                others: "Outros",
                 alternativeTitle: "Acesso Alternativo",
                 alternativeText: "Escolha uma das opções abaixo para nos enviar suas informações e acessar o site:",
                 whatsappOption: "Enviar via WhatsApp",
@@ -771,6 +850,22 @@
                 emailRequired: "Please enter a valid email",
                 phoneRequired: "Please enter a valid phone number",
                 phoneInvalid: "Please enter only numbers in the phone field",
+                sourceLabel: "How did you hear about us? *",
+                sourcePlaceholder: "Select an option...",
+                sourceRequired: "Please select how you heard about us",
+                sourceDetailPlaceholder: "Please specify...",
+                sourceDetailRequired: "Please specify the source",
+                sourceDetailRecommendation: "Who recommended us?",
+                sourceDetailOthers: "Specify how you found us",
+                googleMaps: "Google Maps",
+                onlineAd: "Online ad",
+                influencer: "Influencer",
+                event: "Event or promotional campaign",
+                touristGuide: "Tourist guide / Concierge",
+                hotelInn: "Hotel / Inn",
+                passingBy: "Passing by the location",
+                recommendation: "Recommendation",
+                others: "Other",
                 alternativeTitle: "Alternative Access",
                 alternativeText: "Choose one of the options below to send us your information and access the website:",
                 whatsappOption: "Send via WhatsApp",
@@ -796,6 +891,22 @@
                 emailRequired: "Por favor, ingresa un email válido",
                 phoneRequired: "Por favor, ingresa un teléfono válido",
                 phoneInvalid: "Por favor, ingresa solo números en el teléfono",
+                sourceLabel: "Como nos conociste? *",
+                sourcePlaceholder: "Selecciona una opcion...",
+                sourceRequired: "Por favor, selecciona como nos conociste",
+                sourceDetailPlaceholder: "Por favor, especifica...",
+                sourceDetailRequired: "Por favor, especifica el origen",
+                sourceDetailRecommendation: "Quien nos recomendo?",
+                sourceDetailOthers: "Especifica como nos conociste",
+                googleMaps: "Google Maps",
+                onlineAd: "Anuncio en linea",
+                influencer: "Influenciador",
+                event: "Evento o accion promocional",
+                touristGuide: "Guia turistico / Concierge",
+                hotelInn: "Hotel / Posada",
+                passingBy: "Pasando por el lugar",
+                recommendation: "Recomendacion",
+                others: "Otros",
                 alternativeTitle: "Acceso Alternativo",
                 alternativeText: "Elige una de las opciones a continuación para enviarnos tu información y acceder al sitio web:",
                 whatsappOption: "Enviar por WhatsApp",
@@ -917,6 +1028,27 @@
                     element.textContent = leadTranslations[currentLeadLanguage][key];
                 }
             });
+
+            // Traduzir opcoes do select
+            const optionsToTranslate = document.querySelectorAll("[data-translate-option]");
+            optionsToTranslate.forEach(option => {
+                const key = option.getAttribute("data-translate-option");
+                if (leadTranslations[currentLeadLanguage] && leadTranslations[currentLeadLanguage][key]) {
+                    option.textContent = leadTranslations[currentLeadLanguage][key];
+                }
+            });
+
+            // Traduzir placeholders
+            const placeholdersToTranslate = document.querySelectorAll("[data-translate-placeholder]");
+            placeholdersToTranslate.forEach(element => {
+                const key = element.getAttribute("data-translate-placeholder");
+                if (leadTranslations[currentLeadLanguage] && leadTranslations[currentLeadLanguage][key]) {
+                    element.placeholder = leadTranslations[currentLeadLanguage][key];
+                }
+            });
+
+            // Atualizar placeholder do detalhe conforme a opcao selecionada
+            updateSourceDetailPlaceholder();
         }
 
         // Configurar seletores de idioma e tema
@@ -1009,6 +1141,22 @@
                         errorMessage = leadTranslations[currentLeadLanguage].phoneRequired;
                     }
                     break;
+
+                case "source":
+                    if (!value) {
+                        isValid = false;
+                        errorMessage = leadTranslations[currentLeadLanguage].sourceRequired;
+                    }
+                    break;
+
+                case "sourceDetail":
+                    const sourceSelect = document.getElementById("leadSource");
+                    const sourceValue = sourceSelect ? sourceSelect.value : "";
+                    if ((sourceValue === "Recomendacao" || sourceValue === "Outros") && !value) {
+                        isValid = false;
+                        errorMessage = leadTranslations[currentLeadLanguage].sourceDetailRequired;
+                    }
+                    break;
             }
 
             if (!isValid) {
@@ -1026,14 +1174,51 @@
             input.value = value;
         }
 
+        // Atualizar placeholder do campo de detalhe conforme opcao selecionada
+        function updateSourceDetailPlaceholder() {
+            const sourceSelect = document.getElementById("leadSource");
+            const detailInput = document.getElementById("leadSourceDetail");
+            if (!sourceSelect || !detailInput) return;
+
+            const sourceValue = sourceSelect.value;
+            if (sourceValue === "Recomendacao") {
+                detailInput.placeholder = leadTranslations[currentLeadLanguage].sourceDetailRecommendation;
+            } else if (sourceValue === "Outros") {
+                detailInput.placeholder = leadTranslations[currentLeadLanguage].sourceDetailOthers;
+            } else {
+                detailInput.placeholder = leadTranslations[currentLeadLanguage].sourceDetailPlaceholder;
+            }
+        }
+
+        // Obter texto completo da fonte selecionada
+        function getSourceText() {
+            const sourceSelect = document.getElementById("leadSource");
+            const detailInput = document.getElementById("leadSourceDetail");
+            const sourceValue = sourceSelect.value;
+            const detailValue = detailInput.value.trim();
+
+            if (!sourceValue) return "";
+
+            const selectedOption = sourceSelect.options[sourceSelect.selectedIndex];
+            let sourceText = selectedOption.textContent;
+
+            if ((sourceValue === "Recomendacao" || sourceValue === "Outros") && detailValue) {
+                sourceText += ": " + detailValue;
+            }
+
+            return sourceText;
+        }
+
         // Gerar mensagem para WhatsApp
         function generateWhatsAppMessage(name, email, phone) {
+            const source = getSourceText();
             const message = `Olá! Gostaria de acessar o site do Grupo Fullano.
 
 *Meus dados:*
 Nome: ${name}
 E-mail: ${email}
 Telefone: ${phone}
+Como conheceu: ${source || "Nao informado"}
 
 Por favor, me liberem o acesso ao site. Obrigado!`;
             
@@ -1042,6 +1227,7 @@ Por favor, me liberem o acesso ao site. Obrigado!`;
 
         // Gerar link de e-mail
         function generateEmailLink(name, email, phone) {
+            const source = getSourceText();
             const subject = encodeURIComponent("Solicitação de Acesso - Grupo Fullano");
             const body = encodeURIComponent(`Olá!
 
@@ -1051,6 +1237,7 @@ Meus dados:
 Nome: ${name}
 E-mail: ${email}
 Telefone: ${phone}
+Como conheceu: ${source || "Nao informado"}
 
 Por favor, me liberem o acesso ao site.
 
@@ -1127,6 +1314,8 @@ Obrigado!`);
             const leadName = document.getElementById("leadName");
             const leadEmail = document.getElementById("leadEmail");
             const leadPhone = document.getElementById("leadPhone");
+            const leadSource = document.getElementById("leadSource");
+            const leadSourceDetail = document.getElementById("leadSourceDetail");
             const submitBtn = document.getElementById("submitBtn");
             const loadingSpinner = document.getElementById("loadingSpinner");
             const alternativeAccess = document.getElementById("alternativeAccess");
@@ -1148,6 +1337,30 @@ Obrigado!`);
                 validateField(leadPhone, document.getElementById("phoneError"), "phone");
             });
 
+            // Logica do campo "Como conheceu" - mostrar/ocultar campo de detalhe
+            leadSource.addEventListener("change", () => {
+                validateField(leadSource, document.getElementById("sourceError"), "source");
+                const sourceValue = leadSource.value;
+                
+                if (sourceValue === "Recomendacao" || sourceValue === "Outros") {
+                    leadSourceDetail.classList.add("visible");
+                    leadSourceDetail.required = true;
+                    updateSourceDetailPlaceholder();
+                } else {
+                    leadSourceDetail.classList.remove("visible");
+                    leadSourceDetail.required = false;
+                    leadSourceDetail.value = "";
+                    document.getElementById("sourceDetailError").textContent = "";
+                    leadSourceDetail.classList.remove("error");
+                }
+            });
+
+            leadSourceDetail.addEventListener("blur", () => {
+                if (leadSourceDetail.classList.contains("visible")) {
+                    validateField(leadSourceDetail, document.getElementById("sourceDetailError"), "sourceDetail");
+                }
+            });
+
             // Submissão do formulário
             leadForm.addEventListener("submit", async (e) => {
                 e.preventDefault();
@@ -1156,8 +1369,14 @@ Obrigado!`);
                 const nameValid = validateField(leadName, document.getElementById("nameError"), "name");
                 const emailValid = validateField(leadEmail, document.getElementById("emailError"), "email");
                 const phoneValid = validateField(leadPhone, document.getElementById("phoneError"), "phone");
+                const sourceValid = validateField(leadSource, document.getElementById("sourceError"), "source");
+                
+                let sourceDetailValid = true;
+                if (leadSource.value === "Recomendacao" || leadSource.value === "Outros") {
+                    sourceDetailValid = validateField(leadSourceDetail, document.getElementById("sourceDetailError"), "sourceDetail");
+                }
 
-                if (!nameValid || !emailValid || !phoneValid) {
+                if (!nameValid || !emailValid || !phoneValid || !sourceValid || !sourceDetailValid) {
                     return;
                 }
 
@@ -1171,6 +1390,9 @@ Obrigado!`);
                     
                     // Garantir que o replyto está definido
                     formData.set('replyto', leadEmail.value.trim());
+                    
+                    // Adicionar informacao completa da fonte
+                    formData.set('source_complete', getSourceText());
                     
                     console.log('Enviando dados para Web3Forms...'); // Debug
                     
