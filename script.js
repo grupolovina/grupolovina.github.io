@@ -601,7 +601,7 @@ const locations = [
     rating: 4.4,
     reviews: 6850,
     image: "img/cardfullanolocalizacao.png",
-    link: "https://grupolovina.github.io/fullanopraia/",
+    link: "https://grupolovina.com.br/fullanopraia",
     irLink: "https://maps.app.goo.gl/H5w1hCYRnkRg3M6v8",
   },
   {
@@ -614,7 +614,7 @@ const locations = [
     rating: 4.2,
     reviews: 3934,
     image: "img/cardseixaslocalizacao.png",
-    link: "https://grupolovina.github.io/lovinaseixas",
+    link: "https://grupolovina.com.br/lovinaseixas",
     irLink: "https://maps.app.goo.gl/gDMpRdXMAr8sgvy5A",
   },
   {
@@ -627,7 +627,7 @@ const locations = [
     rating: 4.3,
     reviews: 5748,
     image: "img/cardgolfinholocalizacao.png",
-    link: "https://grupolovina.github.io/golfinhobar",
+    link: "https://grupolovina.com.br/golfinhobar",
     irLink: "https://maps.app.goo.gl/2EPTMRfM9gHwVZKD8",
   },
   {
@@ -640,7 +640,7 @@ const locations = [
     rating: 4.4,
     reviews: 9720,
     image: "img/cardtropicallocalizacao.png",
-    link: "https://grupolovina.github.io/lovinapontadecampina",
+    link: "https://grupolovina.com.br/lovinapontadecampina",
     irLink: "https://maps.app.goo.gl/tWdQ5tE2XLXRp5eW9",
   },
   {
@@ -653,7 +653,7 @@ const locations = [
     rating: 4.6,
     reviews: 47,
     image: "img/cardranchodaemalocalizacao.png",
-    link: "https://grupolovina.github.io/ranchodaema",
+    link: "https://grupolovina.com.br/ranchodaema",
     irLink: "https://maps.app.goo.gl/SposbsVwk455UTd59",
   },
   {
@@ -666,7 +666,7 @@ const locations = [
     rating: 4.6,
     reviews: 47,
     image: "img/cardlovinaturismo.png",
-    link: "https://grupolovina.github.io/lovinaturismo",
+    link: "https://grupolovina.com.br/lovinaturismo",
     irLink: "https://maps.app.goo.gl/GXTCGdTtBtJSudWd6",
   },
 ]
