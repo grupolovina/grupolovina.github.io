@@ -1,0 +1,483 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  background: #003448;
+  color: #e1e1f1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Outfit", sans-serif;
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  gap: 1rem;
+  background-repeat: no-repeat; /* Evita a repetição da imagem */
+  background-position: top center; /* Centraliza a imagem horizontal e verticalmente */
+}
+
+@font-face {
+  font-family: 'KGHAPPYSolid'; /* Defina o nome da sua fonte */
+  src: url('./fonts/KGHAPPYSolid.ttf') format('truetype'); /* Caminho para o arquivo .ttf */
+  font-weight: normal; /* Peso da fonte */
+  font-style: normal;  /* Estilo da fonte */
+}
+
+@font-face {
+  font-family: 'NeueAlteGrotesk-Medium'; /* Defina um nome único para a segunda fonte */
+  src: url('./fonts/NeueAlteGrotesk-Medium.ttf') format('truetype'); /* Caminho para o arquivo da segunda fonte */
+  font-weight: normal; /* Defina o peso da fonte, ajuste se necessário */
+  font-style: normal;  /* Defina o estilo da fonte, ajuste se necessário */
+}
+
+@font-face {
+  font-family: 'DK Mandarin Whispers'; /* Defina um nome único para a segunda fonte */
+  src: url('./fonts/DK Mandarin Whispers.otf') format('truetype'); /* Caminho para o arquivo da segunda fonte */
+  font-weight: normal; /* Defina o peso da fonte, ajuste se necessário */
+  font-style: normal;  /* Defina o estilo da fonte, ajuste se necessário */
+}
+
+.bg-text-animation {
+  position: absolute;
+  top: 5rem;
+  font-size: 12rem;
+  text-transform: uppercase;
+  font-weight: 900;
+  -webkit-text-stroke: 2px #df5e45;
+  -webkit-text-fill-color: transparent;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  z-index: -1;
+  user-select: none;
+}
+
+.my-photo {
+  width: 10rem;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  object-position: top;
+  border: 2px solid #3A3B6E;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.sosmed i {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.sosmed i:hover {
+  color: white;
+}
+
+.sosmed a:not(:last-child) {
+  margin-right: 1rem;
+}
+
+ul {
+  width: 80%;
+  max-width: 40rem;
+}
+
+ul li {
+  list-style: none;
+}
+
+ul.links li:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.slogan {
+  text-align: center;
+  font-family:'NeueAlteGrotesk-Medium', sans-serif;
+  color: #ffffff;
+}
+
+.tituloft {
+  text-align: center;
+  font-family:'KGHappySolid', sans-serif;
+  color: #ffffff;
+}
+
+.links {
+  margin-top: 1rem;
+}
+
+.link-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #003448;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 20px;
+  box-shadow: 8px 10px 0 #1b1c36;
+  border: 2px solid #7b7d97;
+}
+
+.icone-grande {
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.link-card:hover {
+  border: 2px solid white;
+}
+
+.logosgf img{
+  width: 1px;
+  height: 1px;
+}
+
+.links .link-text {
+  text-align: center;
+  flex-grow: 1;
+  color: #ffffff;
+  font-family:'KGHappySolid', sans-serif;
+}
+
+.link-action {
+  color: #ffffff;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.copyright {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-family:'KGHappySolid', sans-serif;
+}
+
+.copyright img {
+  width: 13rem;
+  /* opacity: 0.4; */
+}
+
+#toast {
+  width: max-content;
+  position: fixed;
+  top: 0;
+}
+
+.toast-container {
+  background-color: white;
+  color: #0f0f25;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  animation: muncul 300ms ease-in-out;
+}
+
+.toast-gone {
+  animation: hilang 1s ease-in-out 1s;
+}
+
+@keyframes muncul {
+  from {
+    opacity: 0;
+    transform: translateY(-4rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hilang {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ==========================================
+   ===== CSS DA NOTIFICACAO =====
+   ========================================== */
+
+/* -----------------------------------------
+   FUNDO ESCURECIDO/EMBACADO
+   Cobre todo o site quando a notificacao aparece
+----------------------------------------- */
+.notificacao-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 998;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.notificacao-overlay.ativo {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* -----------------------------------------
+   CAIXA DA NOTIFICACAO
+   DICA: Aumente "width: 500px" se usar banners grandes
+----------------------------------------- */
+.notificacao-caixa {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 90%;
+    width: 500px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    text-align: center;
+    animation: aparecer 0.4s ease;
+    z-index: 999;
+}
+
+@keyframes aparecer {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* -----------------------------------------
+   BOTAO DE FECHAR (X)
+----------------------------------------- */
+.notificacao-fechar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #003448;
+    transition: transform 0.2s;
+}
+
+.notificacao-fechar:hover {
+    transform: scale(1.2);
+}
+
+/* -----------------------------------------
+   TITULO E TEXTO DA NOTIFICACAO
+----------------------------------------- */
+.notificacao-titulo {
+    color: #003448;
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-family: 'Laviossa-Medium', sans-serif;
+    line-height: 1.3;
+}
+
+.notificacao-texto {
+    color: #003448;
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* -----------------------------------------
+   BOTAO DE ACAO
+----------------------------------------- */
+.notificacao-botao {
+    display: inline-block;
+    background: #003448;
+    color: #ffffff;
+    padding: 15px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: 2px solid #f1e8db;
+    font-family: 'Laviossa-Medium', sans-serif;
+}
+
+.notificacao-botao:hover {
+    background: #011d29;
+    transform: scale(1.05);
+}
+
+/* ==========================================
+   IMAGEM NA NOTIFICACAO (descomente para usar)
+   Funciona com QUALQUER tamanho de imagem!
+========================================== */
+/*
+.notificacao-imagem {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: scale-down;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+*/
+
+/* ==========================================
+   VIDEO NA NOTIFICACAO (descomente para usar)
+========================================== */
+/*
+.notificacao-video {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: scale-down;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+*/
+
+/* ==========================================
+   BOTAO DO SINO
+========================================== */
+.sino-container {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 997;
+}
+
+.sino-botao {
+    background: #003448;
+    border: 2px solid #f1e8db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    animation: balancar 1s ease-in-out infinite;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
+}
+
+.sino-botao:hover {
+    transform: scale(1.1);
+    animation: none;
+}
+
+.sino-botao i {
+    font-size: 24px;
+    color: #ffffff;
+}
+
+.sino-bolinha {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 12px;
+    height: 12px;
+    background: #ff4444;
+    border-radius: 50%;
+    border: 2px solid #003448;
+    animation: pulsar 1.5s ease-in-out infinite;
+}
+
+@keyframes balancar {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-15deg); }
+}
+
+@keyframes pulsar {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+}
+
+/* -----------------------------------------
+   MINI MENU DO SINO
+----------------------------------------- */
+.sino-menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+    width: 280px;
+    max-width: 90vw;
+    padding: 15px;
+    display: none;
+    animation: deslizar 0.3s ease;
+}
+
+.sino-menu.aberto {
+    display: block;
+}
+
+@keyframes deslizar {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.sino-menu-titulo {
+    color: #003448;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.sino-menu-item {
+    background: #f5f5f5;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.sino-menu-item:hover {
+    background: #e0e0e0;
+}
+
+.sino-menu-item-titulo {
+    color: #003448;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.sino-menu-item-texto {
+    color: #666;
+    font-size: 12px;
+}
+
+/* Responsividade da notificacao */
+@media (max-width: 480px) {
+    .notificacao-caixa { padding: 20px; }
+    .notificacao-titulo { font-size: 18px; }
+    .notificacao-texto { font-size: 14px; }
+    .notificacao-botao { padding: 12px 25px; font-size: 14px; }
+    .sino-botao { width: 45px; height: 45px; }
+    .sino-menu { width: 250px; }
+}
